@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Lottie from 'lottie-react';
 import {
     Card,
@@ -10,10 +10,52 @@ import {
 } from "@material-tailwind/react";
 import Layout from '../Layout/Layout';
 import img from '../assets/login.json'
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../provider/AuthProvider';
+import Swal from 'sweetalert2';
+import axios from 'axios'
 
 
 const Login = () => {
+   const {setUser, setLoading, loginUser} = useContext(AuthContext)
+   const navigate = useNavigate()
+   const location = useLocation()
+
+    const handleLogin = (e) =>{
+        e.preventDefault()
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        // console.log(email, password);
+        loginUser(email, password)
+        .then(res =>{
+            const user = res.user;
+            setUser(user)
+            const jwtUser = {email:email}
+            axios.post(`${import.meta.env.VITE_URL}/jwt`, jwtUser,{
+                withCredentials:true,
+            })
+            .then(res => {
+                console.log(res.data);
+            })
+            Swal.fire({
+                title:"Successfully login",
+                icon: "success",
+                draggable:true,
+            })
+           navigate( location.state ? location.state : "/"
+)
+        })
+        .catch(err => {
+            setLoading(false)
+            Swal.fire({
+                title:"Invalid email && password.",
+                icon:"error",
+                draggable:true,
+            })
+            return
+        })
+    }
     return (
         <div>
             <Layout/>
@@ -44,41 +86,38 @@ const Login = () => {
                                Welcome Back Login
                             </Typography>
                             <form
-                                action="#"
+                                onSubmit={handleLogin}
                                 className="flex flex-col gap-4 md:mt-12"
                             >
                              <label className='text-start font-bold  '>Gmail</label>
                                         
-                                    <Input
-                                        id="email"
-                                        color="gray"
-                                        size="lg"
+                                    <input
+                                       
+                                     
                                         type="email"
                                         name="email"
                                         placeholder="example@mail.com"
-                                        className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200 p-1 h-12"
-                                        labelProps={{
-                                            className: "hidden",
-                                        }}
+                                        className="w-full input input-bordered placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200 p-1 h-12"
+                                       
                                     />
                                     <label className='text-start font-bold  '>Password</label>
                          
                                           
-                                    <Input
-                                        id="email"
-                                        color="gray"
-                                        size="lg"
+                                    <input
+                                       
                                         type="password"
                                         name="password"
-                                        className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200 p-1 h-12"
+                                        className="w-full input input-bordered placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200 p-1 h-12"
                                         labelProps={{
                                             className: "hidden",
                                         }}
                                     />
                           
-                                <Button size="lg" variant='outlined' className='flex h-12 border-gray-600 bg-gray-600 text-white items-center justify-center gap-2'>
+                                <Button type='submit' size="lg" variant='outlined' className='flex h-12 border-gray-600 bg-gray-600 text-white items-center justify-center gap-2'>
                                     Login
                                 </Button>
+                                </form>
+                                <div className='divider'>or</div>
                                 <Button
                                     variant="outlined"
                                     size="lg"
@@ -95,7 +134,7 @@ const Login = () => {
 
                                 <p>Don't have an Account? <Link className='link-hover text-blue-700' to={'/register'}>Register</Link></p>
                             
-                            </form>
+                           
                         </CardBody>
                     </Card>
                 </div>

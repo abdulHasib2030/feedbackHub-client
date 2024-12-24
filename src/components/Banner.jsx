@@ -30,9 +30,9 @@ const Banner = () => {
         onAutoplayTimeLeft={onAutoplayTimeLeft}
         className="mySwiper"
         >
-        <SwiperSlide ><img className="" src="https://i.ibb.co.com/hDRDs2f/Shaitaan-2024-film-theatrical-poster.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide ><img className='' src="https://i.ibb.co.com/hDRDs2f/Shaitaan-2024-film-theatrical-poster.jpg" alt="" /></SwiperSlide>
-        <SwiperSlide ><img className='' src="https://i.ibb.co.com/hDRDs2f/Shaitaan-2024-film-theatrical-poster.jpg" alt="" /></SwiperSlide>
+        <SwiperSlide ><img className="" src="https://i.ibb.co.com/8MwHBYy/MV5-BMDMw-Yj-U0-MGYt-ZDQx-MC00-ZTAz-LTgy-NWUt-ZTAz-Nm-Fl-OGI0-Y2-Y0-Xk-Ey-Xk-Fqc-Gc-V1.jpg" alt="" /></SwiperSlide>
+        <SwiperSlide ><img className='' src="https://i.ibb.co.com/8MwHBYy/MV5-BMDMw-Yj-U0-MGYt-ZDQx-MC00-ZTAz-LTgy-NWUt-ZTAz-Nm-Fl-OGI0-Y2-Y0-Xk-Ey-Xk-Fqc-Gc-V1.jpg" alt="" /></SwiperSlide>
+        <SwiperSlide ><img className='' src="https://i.ibb.co.com/8MwHBYy/MV5-BMDMw-Yj-U0-MGYt-ZDQx-MC00-ZTAz-LTgy-NWUt-ZTAz-Nm-Fl-OGI0-Y2-Y0-Xk-Ey-Xk-Fqc-Gc-V1.jpg" alt="" /></SwiperSlide>
      
         <div className="autoplay-progress" slot="container-end">
           <svg viewBox="0 0 48 48" ref={progressCircle}>
