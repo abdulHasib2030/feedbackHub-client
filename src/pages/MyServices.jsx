@@ -3,6 +3,8 @@ import Layout from "../Layout/Layout";
 import { AuthContext } from "../provider/AuthProvider";
 import axios from "axios";
 import DatePicker from "react-datepicker";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 
 const MyServices = () => {
@@ -10,7 +12,7 @@ const MyServices = () => {
     const { user } = useContext(AuthContext)
     const [error, setError] = useState({})
     const [selectedYear, setSelectedYear] = useState(null)
-    const [singleItem, setSingleItem] = useState()
+    const [singleItem, setSingleItem] = useState('')
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_URL}/myServices/?email=${user.email}`)
             .then(res => {
@@ -56,9 +58,19 @@ const MyServices = () => {
         }
         const year = selectedYear
 
-        const data = {imageURL,title, company_name, website, description, category, price, year, user:user.email}
+        const data = {imageURL,title, company_name, website, description, category, price, year, user:user.email, service_id: singleItem?._id}
         console.log(data);
-
+        axios.patch(`${import.meta.env.VITE_URL}/update-service`, data)
+        .then(res => {
+            if(res.data.acknowledged){
+                document.getElementById('closeModal').click()
+                toast.success("Successfully updated service.")
+                
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
     const dataload = (id) => {
@@ -190,7 +202,7 @@ const MyServices = () => {
                     <div className="modal-action">
                         <form method="dialog">
                             {/* if there is a button, it will close the modal */}
-                            <button className="btn">Cancel</button>
+                            <button id="closeModal" className="btn">Cancel</button>
                         </form>
                     </div>
                 </div>
