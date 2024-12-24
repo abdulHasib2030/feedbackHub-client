@@ -12,7 +12,8 @@ const MyServices = () => {
     const { user } = useContext(AuthContext)
     const [error, setError] = useState({})
     const [selectedYear, setSelectedYear] = useState(null)
-    const [singleItem, setSingleItem] = useState('')
+    const [singleItem, setSingleItem] = useState()
+    
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_URL}/myServices/?email=${user.email}`)
             .then(res => {
@@ -62,7 +63,8 @@ const MyServices = () => {
         console.log(data);
         axios.patch(`${import.meta.env.VITE_URL}/update-service`, data)
         .then(res => {
-            if(res.data.acknowledged){
+            console.log(res.data.allService, res.data.result);
+            if(res.data.result.acknowledged){
                 document.getElementById('closeModal').click()
                 toast.success("Successfully updated service.")
                 
@@ -75,7 +77,34 @@ const MyServices = () => {
 
     const dataload = (id) => {
         const singleData = myService.find(item => item._id === id)
+        console.log(singleData.year, singleData);
         setSingleItem(singleData)
+    }
+
+    const handleDeleteService = (id) =>{
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`${import.meta.env.VITE_URL}/service/delete/${id}`)
+                .then(res =>{
+                    console.log(res.data);
+                    location.reload()
+                })
+                .then(err =>{
+                    console.log(err.message);
+                })
+            }
+        })
+
+       
     }
 
     return (
@@ -170,12 +199,13 @@ const MyServices = () => {
                                         <DatePicker className='text-gray-700 dark:bg-gray-800 dark:text-gray-300'
                                             selected={selectedYear || singleItem?.year}
                                             onChange={(date) => setSelectedYear(date)}
-                                            defaultValue={singleItem?.year}
+                                         
                                             placeholderText="Select a date"
                                           
 
 
                                         />
+                                        
 
                                     </div>
                                     {
@@ -240,7 +270,7 @@ const MyServices = () => {
                     <tbody>
                         {/* row 1 */}
                         {
-                            myService.map(item => <tr>
+                            myService.map(item => <tr key={item._id}>
 
                                 <td>
                                     <div className="flex items-center gap-3">
@@ -265,7 +295,7 @@ const MyServices = () => {
                                     }} className="cursor-pointer text-yellow-600 font-bold">Edit</p>
                                 </td>
                                 <td>
-                                    <p className="cursor-pointer text-red-600 font-bold">Delete</p>
+                                    <p onClick={()=> handleDeleteService(item._id)} className="cursor-pointer text-red-600 font-bold">Delete</p>
                                 </td>
 
                             </tr>)
