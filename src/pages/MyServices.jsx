@@ -14,13 +14,13 @@ const MyServices = () => {
     const [selectedYear, setSelectedYear] = useState(null)
     const [singleItem, setSingleItem] = useState()
     const [search, setSearch] = useState("")
-    const loadData= useLoaderData()
+    const loadData = useLoaderData()
     const [myService, setMyServices] = useState(loadData)
- 
-   
-    
 
-  
+
+
+
+
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_URL}/myServices/${user.email}?searchParams=${search}`)
@@ -43,7 +43,7 @@ const MyServices = () => {
         const price = form.price.value;
 
 
-        if(!imageURL) return setError({imageURL:"Provide a image url"})
+        if (!imageURL) return setError({ imageURL: "Provide a image url" })
         if (!title || title.length < 2) {
             return setError({ title: "The title must be at least 2 characters long." })
         }
@@ -56,7 +56,7 @@ const MyServices = () => {
         if (!description) {
             return setError({ description: "The description field requires a non-empty value" })
         }
-        if (!category) {
+        if (!category || category === 'Choose category') {
             return setError({ category: "The category field requires a non-empty value" })
         }
         if (!price) {
@@ -66,23 +66,25 @@ const MyServices = () => {
         else {
             setError({ imageURL: null })
         }
-        const year = selectedYear
+        const year = selectedYear ? selectedYear : singleItem?.year
 
-        const data = {imageURL,title, company_name, website, description, category, price, year, user:user.email, service_id: singleItem?._id}
+        const data = { imageURL, title, company_name, website, description, category, price, year, user: user.email, service_id: singleItem?._id }
         console.log(data);
         axios.patch(`${import.meta.env.VITE_URL}/update-service`, data)
-        .then(res => {
-            console.log(res.data.allService, res.data.result);
-            if(res.data.result.acknowledged){
-                document.getElementById('closeModal').click()
-                toast.success("Successfully updated service.")
-                location.reload()
-                
-            }
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            .then(res => {
+                console.log(res.data.allService, res.data.result);
+                if (res.data.result.acknowledged) {
+                    document.getElementById('closeModal').click()
+                    setSelectedYear(null)
+                    setMyServices(res.data.allService)
+                    toast.success("Successfully updated service.")
+
+
+                }
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     const dataload = (id) => {
@@ -91,7 +93,7 @@ const MyServices = () => {
         setSingleItem(singleData)
     }
 
-    const handleDeleteService = (id) =>{
+    const handleDeleteService = (id) => {
 
         Swal.fire({
             title: "Are you sure?",
@@ -104,19 +106,19 @@ const MyServices = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 axios.delete(`${import.meta.env.VITE_URL}/service/delete/${id}`)
-                .then(res =>{
-                    console.log(res.data);
-                    // location.reload()
-                    const filterData = myService.filter(item => item._id !== id)
-                    setMyServices(filterData)
-                })
-                .then(err =>{
-                    console.log(err.message);
-                })
+                    .then(res => {
+                        console.log(res.data);
+                        // location.reload()
+                        const filterData = myService.filter(item => item._id !== id)
+                        setMyServices(filterData)
+                    })
+                    .then(err => {
+                        console.log(err.message);
+                    })
             }
         })
 
-       
+
     }
 
     return (
@@ -154,7 +156,7 @@ const MyServices = () => {
                                 </div>
                                 <div>
                                     <label className="">Company Name</label>
-                                    <input type="text" name='company_name' defaultValue={singleItem?.company_name && singleItem.company_name}  placeholder='Enter company name' className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    <input type="text" name='company_name' defaultValue={singleItem?.company_name && singleItem.company_name} placeholder='Enter company name' className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
 
                                     {
                                         error && error?.company_name && <p className='text-red-400'>
@@ -167,7 +169,7 @@ const MyServices = () => {
                                 <div>
                                     <label className="" >Website</label>
 
-                                    <input type="text" name="website" defaultValue={singleItem?.website && singleItem.website}  placeholder="google.com" className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    <input type="text" name="website" defaultValue={singleItem?.website && singleItem.website} placeholder="google.com" className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
                                     {
                                         error && error?.website && <p className='text-red-400'>
                                             {error.website}
@@ -177,7 +179,7 @@ const MyServices = () => {
                                 <div className='col-span-2'>
                                     <label className="" >Description</label>
 
-                                    <textarea type="text" name="description" placeholder="type..." defaultValue={singleItem?.description && singleItem.description}  className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" rows={5} ></textarea>
+                                    <textarea type="text" name="description" placeholder="type..." defaultValue={singleItem?.description && singleItem.description} className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" rows={5} ></textarea>
                                     {
                                         error && error?.description && <p className='text-red-400'>
                                             {error.description}
@@ -187,7 +189,38 @@ const MyServices = () => {
                                 <div>
                                     <label className="" >Category</label>
 
-                                    <input type="text" defaultValue={singleItem?.category && singleItem.category}  name="category" placeholder="Enter category" className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    <select name='category' className="select block select-bordered w-full max-w-xs">
+                                        <option disabled selected>Choose category</option>
+                                        {
+                                            singleItem?.category_slug === 'home-cleaning' ?
+                                        <option selected  value="home-cleaning">Home Cleaning</option>:
+                                        <option  value="home-cleaning">Home Cleaning</option>
+                                        }
+                                        {
+                                            singleItem?.category_slug === 'electronics-repair' ? 
+                                            <option selected value="electronics-repair">Electronics Repair</option>
+                                            :<option value="electronics-repair">Electronics Repair</option>
+
+                                        }
+                                        {
+                                            singleItem?.category_slug === 'Catering Services' ? 
+                                            <option selected value="catering-services">Catering Services</option>
+                                            :<option value="catering-services">Catering Services</option>
+
+                                        }
+
+                                       {
+                                            singleItem?.category_slug === 'moving-relocation' ? 
+                                            <option selected value="moving-relocation">Moving & Relocation</option>
+                                            :<option value="moving-relocation">Moving & Relocation</option>
+                                            
+                                       }
+                                       {
+                                        singleItem?.category_slug === 'fitness-training'?
+                                        <option selected value="fitness-training">Fitness Training</option>
+                                        :<option value="fitness-training">Fitness Training</option>
+                                       }
+                                    </select>
                                     {
                                         error && error?.category && <p className='text-red-400'>
                                             {error.category}
@@ -197,7 +230,7 @@ const MyServices = () => {
                                 <div>
                                     <label className="" >Price</label>
 
-                                    <input type="text" defaultValue={singleItem?.price && singleItem.price}  name="price" placeholder="$500" className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                    <input type="text" defaultValue={singleItem?.price && singleItem.price} name="price" placeholder="$500" className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
                                     {
                                         error && error?.price && <p className='text-red-400'>
                                             {error.price}
@@ -209,15 +242,15 @@ const MyServices = () => {
                                     <label className="" for="passwordConfirmation">Added date</label> <br />
                                     <div className=" w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
                                         <DatePicker className='text-gray-700 dark:bg-gray-800 dark:text-gray-300'
-                                            selected={selectedYear || singleItem?.year}
+                                            selected={!selectedYear ? singleItem?.year : selectedYear}
                                             onChange={(date) => setSelectedYear(date)}
-                                         
+
                                             placeholderText="Select a date"
-                                          
+
 
 
                                         />
-                                        
+
 
                                     </div>
                                     {
@@ -253,21 +286,21 @@ const MyServices = () => {
 
             <div className="overflow-x-auto my-10 border p-6 rounded-xl">
                 <h1 className="text-center text-3xl font-bold">My Services</h1>
-                <div className="my-5 w-1/2">
-                <label className="input input-bordered flex mt-4 p-2 items-center gap-2">
-                    Search
-                    <input type="text" onChange={(e) => setSearch(e.target.value)} value={search} className="grow" />
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 16 16"
-                        fill="currentColor"
-                        className="h-4 w-4 opacity-70">
-                        <path
-                            fillRule="evenodd"
-                            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                            clipRule="evenodd" />
-                    </svg>
-                </label>
+                <div className="my-5 w-full md:w-1/2">
+                    <label className="input input-bordered flex mt-4 p-2 items-center gap-2">
+
+                        <input type="text" placeholder="Search title company name & category" onChange={(e) => setSearch(e.target.value)} value={search} className="grow" />
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 16 16"
+                            fill="currentColor"
+                            className="h-4 w-4 opacity-70">
+                            <path
+                                fillRule="evenodd"
+                                d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                                clipRule="evenodd" />
+                        </svg>
+                    </label>
                 </div>
                 <table className="table">
                     {/* head */}
@@ -308,7 +341,7 @@ const MyServices = () => {
                                     }} className="cursor-pointer text-yellow-600 font-bold">Edit</p>
                                 </td>
                                 <td>
-                                    <p onClick={()=> handleDeleteService(item._id)} className="cursor-pointer text-red-600 font-bold">Delete</p>
+                                    <p onClick={() => handleDeleteService(item._id)} className="cursor-pointer text-red-600 font-bold">Delete</p>
                                 </td>
 
                             </tr>)

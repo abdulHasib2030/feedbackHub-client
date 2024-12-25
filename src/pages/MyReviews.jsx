@@ -51,14 +51,14 @@ const MyReviews = () => {
         }
        console.log(editData);
        
-        const data = {text, selectedYear, rating: rating? rating:editData.rating, id:editData._id}
+        const data = {text, selectedYear, rating: rating? rating:editData.rating, id:editData._id, email:user.email}
         console.log(data);
         axios.put(`${import.meta.env.VITE_URL}/update-review`, data)
         .then(res => {
-            if(res.data.acknowledged){
+            if(res.data.result.acknowledged){
                 document.getElementById('my_modal_4').classList.add('hidden')
                 toast.success("Successfully updated")
-                location.reload()            
+                setReviews(res.data.allReviw)          
             }
         })
         .catch(err => console.log(err))

@@ -15,6 +15,7 @@ import img from '../assets/register.json'
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import { use } from 'react';
+import toast from 'react-hot-toast';
 
 const Register = () => {
 
@@ -52,7 +53,7 @@ const Register = () => {
             return
         }
         console.log(name, email, photoURL, password);
-        try{
+       
 
        
         createUser(email, password)
@@ -62,11 +63,7 @@ const Register = () => {
                 console.log(user);
                 updateUserProfile({ displayName: name, photoURL: photoURL })
                     .then(() => {
-                        Swal.fire({
-                            title: "Successfully Registered",
-                            icon: "success",
-                            draggable: true
-                        })
+                      toast.success('Successfully Registered')
                         navigate(location.state ? location.state : '/')
                     })
                     .catch((error) => {
@@ -78,7 +75,18 @@ const Register = () => {
             .catch((error) => {
              
                 if (error.code === 'auth/email-already-in-use') {
-                    setError({ error: 'Email already in use' }) 
+                    Swal.fire({
+                        title: "Email Already Registered",
+                        text: "The email you entered is already associated with an account. Please log in instead or use a different email to register.",
+                        icon: "warning",
+                        confirmButtonText: "Go to Login",
+                        showCancelButton: true,
+                        cancelButtonText: "Cancel",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          navigate("/login"); // Navigate to the login page
+                        }
+                      });
                 }
                 else {
                     const err = error.message;
@@ -86,13 +94,8 @@ const Register = () => {
                     
                 }
             })
-        }
-        finally{
-            // setLoading(false)
-            console.log("Abdul");
-            navigate('/login')
-            
-        }
+        
+       
 
     }
 

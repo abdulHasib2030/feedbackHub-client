@@ -45,11 +45,7 @@ const Login = () => {
             })
             .catch(err => {
                 setLoading(false)
-                Swal.fire({
-                    title: "Invalid email && password.",
-                    icon: "error",
-                    draggable: true,
-                })
+                toast.error("Invalid Email or Password")
                 return
             })
     }

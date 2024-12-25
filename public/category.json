@@ -1,0 +1,38 @@
+[
+    {
+      "_id": { "$oid": "64b1f1a29d8b2f4e2f5c9a12" },
+      "name": "Home Cleaning",
+      "slug": "home-cleaning",
+      "image": "https://i.ibb.co.com/cYJ2Bbz/icons8-cleaning-gutter-96.png",
+      "description": "Professional home cleaning services to keep your space spotless."
+    },
+    {
+      "_id": { "$oid": "64b1f1b49d8b2f4e2f5c9a13" },
+      "name": "Electronics Repair",
+      "slug": "electronics-repair",
+      "image": "https://i.ibb.co.com/D4sgjGf/repairing.png",
+      "description": "Reliable repair services for all your electronic devices."
+    },
+    {
+      "_id": { "$oid": "64b1f1c69d8b2f4e2f5c9a14" },
+      "name": "Catering Services",
+      "slug": "catering-services",
+      "image": "https://i.ibb.co.com/xLPtxBp/food-service.png",
+      "description": "Delicious and professional catering services for every event."
+    },
+    {
+      "_id": { "$oid": "64b1f1d89d8b2f4e2f5c9a15" },
+      "name": "Moving & Relocation",
+      "slug": "moving-relocation",
+      "image": "https://i.ibb.co.com/R2KB4v8/moving-truck.png",
+      "description": "Efficient and secure moving services for homes and businesses."
+    },
+    {
+      "_id": { "$oid": "64b1f1ea9d8b2f4e2f5c9a16" },
+      "name": "Fitness Training",
+      "slug": "fitness-training",
+      "image": "https://i.ibb.co.com/nwLs2qs/treadmill.png",
+      "description": "Personalized fitness training to help you reach your health goals."
+    }
+  ]
+  

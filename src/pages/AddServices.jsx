@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import "react-datepicker/dist/react-datepicker.css";
+import toast from 'react-hot-toast';
 
 const AddServices = () => {
 
@@ -43,7 +44,7 @@ const AddServices = () => {
         if (!description) {
             return setError({ description: "The description field requires a non-empty value" })
         }
-        if (!category) {
+        if (!category || category === 'Choose category') {
             return setError({ category: "The category field requires a non-empty value" })
         }
         if (!price) {
@@ -53,19 +54,18 @@ const AddServices = () => {
         else {
             setError({ imageURL: null })
         }
+
+        let cat = category.split('-').join(' ')
+         cat = (cat.charAt(0).toUpperCase() + cat.slice(1));
         const year = selectedYear
 
-        const data = { imageURL, title, company_name, website, description, category, price, year, user: user.email }
+        const data = { imageURL, title, company_name, website, description,category:cat, category_slug:category, price, year, user: user.email }
 
         axios.post(`${import.meta.env.VITE_URL}/addService`, data)
             .then(res => {
                 //    if(res.data.ac)
                 if (res.data.acknowledged) {
-                    Swal.fire({
-                        title: "Successfully Added Service",
-                        icon: "success",
-                        draggable: true,
-                    })
+                    toast.success('Successfully Added Service')
                     navigate(`/my-services/${user.email}`)
                 }
             })
@@ -78,19 +78,9 @@ const AddServices = () => {
             })
     }
 
-    const handleAddCategory = (e) => {
-        e.preventDefault()
-        console.log(e.target.category.value);
+    
 
-    }
-
-    const showCategory = (bool) => {
-        if (bool === true)
-            document.getElementById('show-category').classList.remove('hidden')
-        else
-            document.getElementById('show-category').classList.add('hidden')
-
-    }
+   
     console.log(category);
     return (
         <div>
@@ -156,30 +146,23 @@ const AddServices = () => {
                             <label className="" >Category</label>
                             <select name='category' className="select block select-bordered w-full max-w-xs">
                                 <option disabled selected>Choose category</option>
-                                {
-                                    category.map(item => 
-                                        <option value={item}>{item}</option>
-                                    )
-                                }
+                                <option value="home-cleaning">Home Cleaning</option>
+                                <option value="electronics-repair">Electronics Repair</option>
+                                <option value="catering-services">Catering Services</option>
+                                <option value="moving-relocation">Moving & Relocation</option>
+                                <option value="fitness-training">Fitness Training</option>
                             </select>
                             {
                                 error && error?.category && <p className='text-red-400'>
                                     {error.category}
                                 </p>
                             }
-                            <div className='hidden' id='show-category' >
-                                <input type="text" onChange={(e) => setAddCategory(e.target.value)} placeholder="Enter category" className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
-                                <div>
-                                    <button onClick={(() => showCategory(false))} className='px-6 py-2 border-2 my-2 mr-2'>Cancel </button>
-                                    <button onClick={() => { setCategory([...category, addCategory]); showCategory(false) }} className='px-6 py-2 border-2 my-2'>Add </button>
-                                </div>
-                            </div>
-                            <button onClick={() => showCategory(true)} className='px-6 py-2 rounded-lg border-2 mt-2'>Add Category</button>
+                           
                         </div>
                         <div>
                             <label className="" >Price</label>
 
-                            <input type="text" name="price" placeholder="$500" className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                            <input type="number" name="price" placeholder="$500" className="block w-full py-2 px-4 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
                             {
                                 error && error?.price && <p className='text-red-400'>
                                     {error.price}

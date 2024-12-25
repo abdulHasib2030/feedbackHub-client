@@ -18,6 +18,7 @@ const MyServiceDetails = () => {
     const [error, setError] = useState({})
 
     const { result, review } = useLoaderData()
+    const [data, setData] = useState(review)
     const { title, imageURL, category, description, year, company_name, website, price, _id } = result;
     // let yearFormat = year = String(year.getDate()) + '/' + String(year.getMonth()) + '/' + String(year.getFullYear())
     const dateFormat = (data)=>{
@@ -60,18 +61,23 @@ const MyServiceDetails = () => {
             userPhoto: user.photoURL, name: user.displayName, service_id: _id, email:user.email, title: title
         }
         document.getElementById('my_modal_4').classList.add('hidden')
-        console.log(data);
+        // console.log(data);
         axios.post(`${import.meta.env.VITE_URL}/add-review`, data)
             .then(res => {
-                console.log(res.data);
-                toast.success("Successfully added your review.")
+                // console.log(res.data.result);
+                // setData(res.data.allReviw)
                 location.reload()
+            
+                    toast.success("Successfully added your review.")
+                    
+            
             })
             .catch(err => {
                 console.log(err.message);
             })
 
     }
+    console.log(data.length);
     
     return (
         <div>
@@ -181,7 +187,7 @@ const MyServiceDetails = () => {
 
                 <div className='md:col-span-8  md:order-1 order-2 '>
                     {
-                        review.map(item =>
+                        data.map(item =>
                             <div className='border rounded-xl p-4 mb-4'>
 
 
