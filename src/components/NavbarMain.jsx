@@ -35,7 +35,7 @@ import { AuthContext } from '../provider/AuthProvider';
 
 
 const NavbarMain = () => {
-  const { user, logoutUser } = useContext(AuthContext)
+  const { user, logoutUser, countReview, countService } = useContext(AuthContext)
   const [openNav, setOpenNav] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
@@ -114,7 +114,7 @@ const NavbarMain = () => {
 
 
   return (
-    <div className="-mt-6 ">
+    <div className="-mt-6 relative">
       <Navbar className="sticky top-0 z-10 border-none h-max  rounded-none px-4 py-2 lg:px-8 lg:py-4 ">
         <div className="flex items-center justify-between text-black">
           <Typography
@@ -175,6 +175,11 @@ const NavbarMain = () => {
                   </Button>
                 </div>
             }
+
+            <div className='flex gap-3 lg:hidden '>
+              <p className='font-bold'>Total Review: {countReview}</p>
+              <p className='font-bold'>Total Service: {countService } </p>
+            </div>
 
             <IconButton
               variant="text"

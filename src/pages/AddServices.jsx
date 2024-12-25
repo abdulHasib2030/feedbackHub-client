@@ -11,11 +11,11 @@ import toast from 'react-hot-toast';
 const AddServices = () => {
 
     const navigate = useNavigate()
-    const { user } = useContext(AuthContext)
+    const { user,   setCountService, } = useContext(AuthContext)
     const [selectedYear, setSelectedYear] = useState(new Date());
 
     const [error, setError] = useState({})
-    const [addCategory, setAddCategory] = useState('')
+    // const [addCategory, setAddCategory] = useState('')
     const [category, setCategory] = useState([])
 
     const handleAddService = (e) => {
@@ -64,7 +64,8 @@ const AddServices = () => {
         axios.post(`${import.meta.env.VITE_URL}/addService`, data)
             .then(res => {
                 //    if(res.data.ac)
-                if (res.data.acknowledged) {
+                if (res.data.result.acknowledged) {
+                    setCountService(res.data.lenService)
                     toast.success('Successfully Added Service')
                     navigate(`/my-services/${user.email}`)
                 }

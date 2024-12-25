@@ -110,6 +110,7 @@ const MyServices = () => {
                         console.log(res.data);
                         // location.reload()
                         const filterData = myService.filter(item => item._id !== id)
+                        toast.success("Successfully deleted service.")
                         setMyServices(filterData)
                     })
                     .then(err => {

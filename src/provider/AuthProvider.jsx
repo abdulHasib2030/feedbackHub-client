@@ -10,6 +10,8 @@ const provider = new GoogleAuthProvider()
 const AuthProvider = ({children}) => {
     const [loading, setLoading] =useState(true);
     const [user, setUser] = useState(null);
+    const [countService, setCountService] = useState(0)
+    const [countReview, setCountReview] = useState(0)
 
     const createUser = (email, password) =>{
     // setLoading(true)
@@ -57,6 +59,8 @@ const AuthProvider = ({children}) => {
         updateUserProfile,
         logoutUser,
         googleAuth,
+        countReview, setCountReview,
+        countService, setCountService,
     }
     return (
        <AuthContext.Provider value={authInfo}>

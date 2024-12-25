@@ -27,10 +27,7 @@ const MyReviews = () => {
             .catch(err => console.log(err))
     }, [user.email])
 
-    const dataload = (id) =>{
-       const data = reviews.find(item => item._id === id)
-       setEditData(data)
-    }
+    
 
     const handleUpdateReview = (e) => {
         e.preventDefault()
@@ -82,7 +79,7 @@ const MyReviews = () => {
                     if(res.data.acknowledged && res.data.deletedCount === 1){
                     const filterData =reviews.filter(item => item._id !== id)
                     setReviews(filterData)
-                    
+                    toast.success("Successfully delete review.")
 
                     }
                 })
@@ -92,6 +89,10 @@ const MyReviews = () => {
     }
 
     console.log(reviews);
+    const dataload2 = (id) =>{
+        const data = reviews.find(item => item._id === id)
+        setEditData(data)
+     }
 
     return (
         <div>
@@ -191,10 +192,16 @@ const MyReviews = () => {
                                     <Rating initialValue={item.rating} readonly showTooltip tooltipArray={['Terrible', 'Bad', 'Average', 'Great', 'Prefect']} size={20}></Rating>
                                 </div>
                             </div>
-                            <div className='text-3xl flex items-center gap-4 md:mt-0 mt-4'>
+                            <div className='text-3xl flex items-center gap-4 md:mt-0 mt-4 '>
+                                 <div onClick={() => { document.getElementById('my_modal_4').showModal(), dataload2(item._id) }} className='hover:text-gray-400 cursor-pointer'>
+                                <MdEdit  />
 
-                                <MdEdit onClick={() => { document.getElementById('my_modal_4').showModal(), dataload(item._id) }} className='hover:text-gray-400 cursor-pointer' />
-                                <MdDelete onClick={()=> handleDeleteReview(item._id)} className='hover:text-gray-400 cursor-pointer' />
+                                 </div>
+
+                                 <div onClick={()=> handleDeleteReview(item._id)} className='hover:text-gray-400 cursor-pointer'>
+                                <MdDelete  />
+
+                                 </div>
                             </div>
                         </div>
                     )

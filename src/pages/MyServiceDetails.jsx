@@ -12,7 +12,7 @@ import toast from 'react-hot-toast';
 
 
 const MyServiceDetails = () => {
-    const { user } = useContext(AuthContext)
+    const { user , setCountReview} = useContext(AuthContext)
     const [rating, setRating] = useState(0);
     const [selectedYear, setSelectedYear] = useState(null);
     const [error, setError] = useState({})
@@ -66,6 +66,7 @@ const MyServiceDetails = () => {
             .then(res => {
                 // console.log(res.data.result);
                 // setData(res.data.allReviw)
+                setCountReview(res.data.lenReview)
                 location.reload()
             
                     toast.success("Successfully added your review.")
