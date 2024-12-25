@@ -18,7 +18,7 @@ import { use } from 'react';
 
 const Register = () => {
 
-    const { createUser, setUser, updateUserProfile, setLoading } = useContext(AuthContext)
+    const {googleAuth, createUser, setUser, updateUserProfile, setLoading } = useContext(AuthContext)
     const location = useLocation()
     const navigate = useNavigate()
     const [error, setError] = useState({})
@@ -94,6 +94,13 @@ const Register = () => {
             
         }
 
+    }
+
+    const handleGoogleLogin = () => {
+        googleAuth().then(res => {
+            setUser(res.user)
+            navigate('/')
+        })
     }
 
     return (
@@ -197,7 +204,7 @@ const Register = () => {
                                 </Button>
                             </form>
                             <div className='divider'>or</div>
-                            <Button
+                            <Button onClick={handleGoogleLogin}
                                 variant="outlined"
                                 size="lg"
                                 className="flex h-12 border-blue-gray-200 items-center justify-center gap-2"
