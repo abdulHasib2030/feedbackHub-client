@@ -66,7 +66,7 @@ const AddServices = () => {
                         icon: "success",
                         draggable: true,
                     })
-                    navigate('/my-services')
+                    navigate(`/my-services/${user.email}`)
                 }
             })
             .catch(err => {

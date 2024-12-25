@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 export const AuthContext = createContext();
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import { auth } from '../firebase/firebase';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
@@ -22,6 +22,11 @@ const AuthProvider = ({children}) => {
     const updateUserProfile = (userData) =>{
         return updateProfile(auth.currentUser, userData)
     }
+
+    const googleAuth = () =>{
+        return signInWithPopup(auth, provider)
+    }
+
 
    useEffect(()=>{
     const subscribe  = onAuthStateChanged(auth, (currentUser)=>{
@@ -49,6 +54,7 @@ const AuthProvider = ({children}) => {
         loginUser,
         updateUserProfile,
         logoutUser,
+        googleAuth,
     }
     return (
        <AuthContext.Provider value={authInfo}>

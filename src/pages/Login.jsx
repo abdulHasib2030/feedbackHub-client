@@ -18,7 +18,7 @@ import toast from 'react-hot-toast';
 
 
 const Login = () => {
-   const {setUser, setLoading, loginUser} = useContext(AuthContext)
+   const {setUser, setLoading, loginUser, googleAuth} = useContext(AuthContext)
    const navigate = useNavigate()
    const location = useLocation()
 
@@ -53,6 +53,12 @@ const Login = () => {
             return
         })
     }
+
+    const handleGoogleLogin = () =>{
+        googleAuth().then(res)
+    }
+
+
     return (
         <div>
             <Layout/>
