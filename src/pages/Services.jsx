@@ -22,7 +22,7 @@ const MyServices = () => {
                 <h1 className='text-center text-3xl font-bold'>All Services</h1>
             <div className='grid  md:grid-cols-2 grid-cols-1 gap-5 mt-7'>
             {
-                Service.map(item =>
+                Service?.map(item =>
 
                     <Card key={item._id} className="w-full  flex-row">
                     <CardHeader

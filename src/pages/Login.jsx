@@ -14,6 +14,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 import axios from 'axios'
+import toast from 'react-hot-toast';
 
 
 const Login = () => {
@@ -38,11 +39,7 @@ const Login = () => {
             .then(res => {
                 console.log(res.data);
             })
-            Swal.fire({
-                title:"Successfully login",
-                icon: "success",
-                draggable:true,
-            })
+            toast.success("Successfully login.")
            navigate( location.state ? location.state : "/"
 )
         })

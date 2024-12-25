@@ -9,10 +9,13 @@ import AddServices from '../pages/AddServices';
 import Services from '../pages/Services';
 import MyServiceDetails from '../pages/MyServiceDetails';
 import MyServices from '../pages/MyServices';
+import MyReviews from '../pages/MyReviews';
+import ErrorPage from '../pages/ErrorPage';
 
 const router = createBrowserRouter([
     {
         path:'/',
+        errorElement: <ErrorPage/>,
         elemetn: <h1>Home</h1>,
         children: [
             {
@@ -37,8 +40,14 @@ const router = createBrowserRouter([
                 loader: () => fetch(`${import.meta.env.VITE_URL}/services`),
             },
             {
-                path: '/my-services',
+                path: '/my-services/:email',
                 element: <PrivateRoute><MyServices></MyServices></PrivateRoute>,
+                loader: ({params})=> fetch(`${import.meta.env.VITE_URL}/myServices/${params.email}`),
+
+            },
+            {
+                path: '/my-reviews',
+                element: <PrivateRoute><MyReviews/></PrivateRoute>,
             },
             {
                 path: '/service-details/:id',

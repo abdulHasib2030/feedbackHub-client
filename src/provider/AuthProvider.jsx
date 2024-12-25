@@ -3,6 +3,7 @@ export const AuthContext = createContext();
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from '../firebase/firebase';
 import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 const AuthProvider = ({children}) => {
     const [loading, setLoading] =useState(true);
@@ -34,11 +35,7 @@ const AuthProvider = ({children}) => {
 
    const logoutUser = () =>{
     setLoading(false)
-    Swal.fire({
-        title:"Successfully Logout.",
-        icon: "success",
-        draggable:true,
-    })
+   toast.success("Successfully logout.")
     return signOut(auth)
 
    }

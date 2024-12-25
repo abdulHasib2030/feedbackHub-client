@@ -91,9 +91,9 @@ const NavbarMain = () => {
             color="blue-gray"
             className="p-1 font-normal"
           >
-            <a href="#" className="flex items-center">
+            <NavLink to={'/my-reviews'} className="flex items-center">
               My Reviews
-            </a>
+            </NavLink>
           </Typography>
           <Typography
             as="li"
@@ -101,7 +101,7 @@ const NavbarMain = () => {
             color="blue-gray"
             className="p-1 font-normal"
           >
-            <NavLink to={'/my-services'} className="flex items-center">
+            <NavLink to={`/my-services/${user.email}`} className="flex items-center">
               My Services
             </NavLink>
           </Typography>
