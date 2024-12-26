@@ -41,7 +41,7 @@ const Feature = ({ data }) => {
                     </Typography>
                 </CardBody>
                 <CardFooter className="pt-0">
-                    <a href="#" className="inline-block">
+                    <Link to={`/service-details/${item._id}`} className="inline-block">
                         <Button size="sm" variant="text" className="flex items-center gap-2">
                            see details
                             <svg
@@ -59,7 +59,7 @@ const Feature = ({ data }) => {
                                 />
                             </svg>
                         </Button>
-                    </a>
+                    </Link>
                 </CardFooter>
             </Card>
               </motion.div>

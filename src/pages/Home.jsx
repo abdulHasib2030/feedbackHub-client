@@ -7,9 +7,10 @@ import Feature from '../components/Feature';
 import Partner from '../components/Partner';
 import RecentReview from '../components/RecentReview';
 import { AuthContext } from '../provider/AuthProvider';
+import MostReviewService from '../components/MostReviewService';
 
 const Home = () => {
-    const {result, lenReview, lenService}= useLoaderData()
+    const {result, lenReview, lenService,  recentReview, mostReviewService}= useLoaderData()
     const { countReview, setCountReview,
         countService, setCountService,}= useContext(AuthContext)
         setCountReview(lenReview)
@@ -20,8 +21,8 @@ const Home = () => {
             <Banner></Banner>
             <Feature data={result}></Feature>
             <Partner></Partner>
-            <RecentReview></RecentReview>
-            
+            <RecentReview data = { recentReview}></RecentReview>
+            <MostReviewService data= {mostReviewService}></MostReviewService>
 
         </div>
     );

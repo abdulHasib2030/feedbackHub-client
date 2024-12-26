@@ -12,6 +12,9 @@ import MyServices from '../pages/MyServices';
 import MyReviews from '../pages/MyReviews';
 import ErrorPage from '../pages/ErrorPage';
 import Layout from '../Layout/Layout';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+
+// const axiosSecure = useAxiosSecure()
 
 const router = createBrowserRouter([
     {
@@ -45,7 +48,10 @@ const router = createBrowserRouter([
                 path: '/my-services/:email',
                 element: <PrivateRoute><MyServices></MyServices></PrivateRoute>,
                 loader: ({params})=> fetch(`${import.meta.env.VITE_URL}/myServices/${params.email}`),
-
+                // loader: async ({ params }) => {
+                //     const response = await axiosSecure.get(`/myServices/${params.email}`);
+                //     return response.data;
+                // }
             },
             {
                 path: '/my-reviews',

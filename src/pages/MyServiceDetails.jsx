@@ -58,7 +58,8 @@ const MyServiceDetails = () => {
         // console.log(e.target.reviewtext.value, selectedYear, rating);
         const data = {
             review_text: e.target.reviewtext.value, date: selectedYear, rating: rating,
-            userPhoto: user.photoURL, name: user.displayName, service_id: _id, email:user.email, title: title
+            userPhoto: user.photoURL, name: user.displayName, service_id: _id, email:user.email, title: title,
+            service_logo: imageURL, service_name:company_name, service_website:website
         }
         document.getElementById('my_modal_4').classList.add('hidden')
         // console.log(data);
