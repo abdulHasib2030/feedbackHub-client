@@ -7,6 +7,7 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import Footer from '../components/Footer';
 
 const MyReviews = () => {
     const [reviews, setReviews] = useState([])
@@ -208,6 +209,8 @@ const MyReviews = () => {
                 }
 
             </div>
+
+            <Footer/>
         </div>
     );
 };

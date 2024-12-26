@@ -9,6 +9,7 @@ import { Rating } from 'react-simple-star-rating'
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import Footer from '../components/Footer';
 
 
 const MyServiceDetails = () => {
@@ -240,6 +241,8 @@ const MyServiceDetails = () => {
 
                 </div>
             </div>
+
+            <Footer/>
         </div>
     );
 };

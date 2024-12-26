@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { useLoaderData } from "react-router-dom";
+import Footer from "../components/Footer";
 
 
 const MyServices = () => {
@@ -352,6 +353,8 @@ const MyServices = () => {
 
                 </table>
             </div>
+
+            <Footer/>
         </div>
     );
 };

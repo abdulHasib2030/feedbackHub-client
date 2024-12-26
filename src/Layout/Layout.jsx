@@ -6,6 +6,7 @@ import { AuthContext } from '../provider/AuthProvider';
 import Loading from '../utlities/Loading';
 import toast, { Toaster } from 'react-hot-toast';
 import CountUp from 'react-countup';
+import Footer from '../components/Footer';
 const Layout = () => {
     const {loading, countReview, countService} = useContext(AuthContext)
             console.log(countReview, countService);
@@ -16,10 +17,7 @@ const Layout = () => {
         <div className='max-w-screen-2xl mx-auto'>
         <NavbarMain/>
         <Toaster />
-        <Outlet>
-          
-        </Outlet>
-        
+       
     </div>
     <div className="absolute hidden lg:block lg:-right-60  z-50 bg-black p-4 text-white rounded-lg w-44 font-bold">
                 <div>

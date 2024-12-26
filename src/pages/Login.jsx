@@ -15,6 +15,7 @@ import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 import axios from 'axios'
 import toast from 'react-hot-toast';
+import Footer from '../components/Footer';
 
 
 const Login = () => {
@@ -141,6 +142,7 @@ const Login = () => {
                     </Card>
                 </div>
             </section>
+            <Footer/>
         </div>
     );
 };

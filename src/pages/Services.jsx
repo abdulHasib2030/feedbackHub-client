@@ -10,6 +10,7 @@ import {
 import { Link, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import axios from 'axios';
+import Footer from '../components/Footer';
 
 const MyServices = () => {
     const { user } = useContext(AuthContext)
@@ -99,6 +100,8 @@ const MyServices = () => {
                     }
                 </div>
             </div>
+
+            <Footer/>
         </div>
     );
 };

@@ -234,6 +234,8 @@ const Register = () => {
                     </Card>
                 </div>
             </section>
+
+            <Footer/>
         </div>
     );
 };

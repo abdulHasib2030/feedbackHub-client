@@ -8,6 +8,7 @@ import Partner from '../components/Partner';
 import RecentReview from '../components/RecentReview';
 import { AuthContext } from '../provider/AuthProvider';
 import MostReviewService from '../components/MostReviewService';
+import Footer from '../components/Footer';
 
 const Home = () => {
     const {result, lenReview, lenService,  recentReview, mostReviewService}= useLoaderData()
@@ -17,13 +18,13 @@ const Home = () => {
         setCountService(lenService)
     return (
         <div className='relative '>
-            <Layout></Layout>
+           <Layout></Layout>
             <Banner></Banner>
             <Feature data={result}></Feature>
             <Partner></Partner>
             <RecentReview data = { recentReview}></RecentReview>
             <MostReviewService data= {mostReviewService}></MostReviewService>
-
+            <Footer></Footer>
         </div>
     );
 };

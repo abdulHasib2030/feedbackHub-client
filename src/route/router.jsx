@@ -19,8 +19,8 @@ import useAxiosSecure from '../hooks/useAxiosSecure';
 const router = createBrowserRouter([
     {
         path:'/',
-        errorElement: <ErrorPage/>,
         elemetn: <Layout></Layout>,
+        errorElement: <ErrorPage/>,
         children: [
             {
                 path: '/',

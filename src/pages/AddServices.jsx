@@ -7,6 +7,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import "react-datepicker/dist/react-datepicker.css";
 import toast from 'react-hot-toast';
+import Footer from '../components/Footer';
 
 const AddServices = () => {
 
@@ -207,6 +208,7 @@ const AddServices = () => {
                 </form>
             </section>
 
+        <Footer></Footer>
         </div>
     );
 };
