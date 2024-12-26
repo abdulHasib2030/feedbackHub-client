@@ -5,7 +5,7 @@ import { Rating } from 'react-simple-star-rating';
 const RecentReview = ({data}) => {
     return (
         <div className='my-16'>
-            <div className='flex justify-between my-5'>
+            <div className='flex justify-between my-5' id='recent-review'>
                 <h1 className='text-3xl font-bold  text-start'>Recent reviews</h1>
             </div>
             <div className='grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5'>
