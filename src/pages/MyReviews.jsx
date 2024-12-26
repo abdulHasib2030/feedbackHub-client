@@ -8,63 +8,80 @@ import DatePicker from 'react-datepicker';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import Footer from '../components/Footer';
+import { Helmet } from 'react-helmet-async';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const MyReviews = () => {
     const [reviews, setReviews] = useState([])
     const [error, setError] = useState({})
-    const { user } = useContext(AuthContext)
+    const { user, setCountReview,setCountService, } = useContext(AuthContext)
     const [selectedYear, setSelectedYear] = useState(new Date())
     const [rating, setRating] = useState(0)
     const [editData, setEditData] = useState()
 
+    const axiosSecure = useAxiosSecure()
+
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_URL}/my-reviews/?email=${user.email}`)
+
+
+        axiosSecure.get(`/my-reviews/?email=${user.email}`)
             .then(res => {
-                // console.log(res.data);
-                setReviews(res.data)
-                setRating(res.data.rating)
-                setRating(res.data.date)
+                setReviews(res.data.result)
+                setRating(res.data.result.rating)
+                setSelectedYear(res.data.result.date)
+                setCountReview(res.data.lenReview)
+                setCountService(res.data.lenService)
+            // console.log(res.data.lenReview, res.data.lenService, res.data.result);
             })
-            .catch(err => console.log(err))
     }, [user.email])
 
-    
+
 
     const handleUpdateReview = (e) => {
         e.preventDefault()
         const text = e.target.reviewtext.value;
         // console.log(text, selectedYear, rating);
         // setRating(editData.rating)
-        if(!text){
-            setError({text: "Required review text."})
+        if (!text) {
+            setError({ text: "Required review text." })
             return
         }
-        if(!selectedYear){
-            setError({yearErr: "Choose a date"})
+        if (!selectedYear) {
+            setError({ yearErr: "Choose a date" })
             return
         }
-        if(rating === 0 ){
-            setError({ratErr: "Choose a rating"})
+        if (rating === 0) {
+            setError({ ratErr: "Choose a rating" })
             return
         }
-       console.log(editData);
-       
-        const data = {text, selectedYear, rating: rating? rating:editData.rating, id:editData._id, email:user.email}
-        console.log(data);
-        axios.put(`${import.meta.env.VITE_URL}/update-review`, data)
-        .then(res => {
-            if(res.data.result.acknowledged){
-                document.getElementById('my_modal_4').classList.add('hidden')
-                toast.success("Successfully updated")
-                setReviews(res.data.allReviw)          
-            }
-        })
-        .catch(err => console.log(err))
+
+
+        const data = { text, selectedYear, rating: rating ? rating : editData.rating, id: editData._id, email: user.email }
+
+        // axios.put(`${import.meta.env.VITE_URL}/update-review`, data)
+        //     .then(res => {
+        //         if (res.data.result.acknowledged) {
+        //             document.getElementById('my_modal_4').classList.add('hidden')
+        //             toast.success("Successfully updated")
+        //             setReviews(res.data.allReviw)
+        //         }
+        //     })
+        //     .catch(err => (err))
+
+        axiosSecure.put(`/update-review?email=${user.email}`)
+            .then(res => {
+                if (res.data.result.acknowledged) {
+                    document.getElementById('my_modal_4').classList.add('hidden')
+                    toast.success("Successfully updated")
+                    setReviews(res.data.allReviw)
+                }
+            })
+            .catch(err => (err))
 
 
     }
 
-    const handleDeleteReview = (id) =>{
+    const handleDeleteReview = (id) => {
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -75,28 +92,42 @@ const MyReviews = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`${import.meta.env.VITE_URL}/review/delete/${id}`)
-                .then(res => {
-                    if(res.data.acknowledged && res.data.deletedCount === 1){
-                    const filterData =reviews.filter(item => item._id !== id)
-                    setReviews(filterData)
-                    toast.success("Successfully delete review.")
+                // axios.delete(`${import.meta.env.VITE_URL}/review/delete/${id}`)
+                //     .then(res => {
+                //         if (res.data.acknowledged && res.data.deletedCount === 1) {
+                //             const filterData = reviews.filter(item => item._id !== id)
+                //             setReviews(filterData)
+                //             toast.success("Successfully delete review.")
 
-                    }
-                })
-                .catch(err => console.log(err))
+                //         }
+                //     })
+                //     .catch(err => (err))
+
+                axiosSecure.delete(`/review/delete/${id}?email=${user.email}`)
+                    .then(res => {
+                        if (res.data.acknowledged && res.data.deletedCount === 1) {
+                            const filterData = reviews.filter(item => item._id !== id)
+                            setReviews(filterData)
+                            toast.success("Successfully delete review.")
+
+                        }
+                    })
+                    .catch(err => (err))
+
             }
         })
     }
 
-    console.log(reviews);
-    const dataload2 = (id) =>{
+
+    const dataload2 = (id) => {
         const data = reviews.find(item => item._id === id)
         setEditData(data)
-     }
+    }
 
     return (
         <div>
+            <Helmet title='My Reviews | FeedbackHub' />
+
             <Layout></Layout>
 
 
@@ -149,12 +180,12 @@ const MyReviews = () => {
                                 <label className="" > Give Your Rating</label>
                                 <div className="rating-container">
                                     <Rating onClick={(rate) => setRating(rate)}
-                                        ratingValue={rating===0 && editData?.rating}
+                                        ratingValue={rating === 0 && editData?.rating}
                                         initialValue={editData?.rating}
                                         showTooltip
                                         tooltipArray={['Terrible', 'Bad', 'Average', 'Great', 'Prefect']}
                                     ></Rating>
-                                   
+
                                     {
                                         error?.ratErr && <p className='text-red-600'>{error.ratErr}</p>
                                     }
@@ -181,7 +212,7 @@ const MyReviews = () => {
 
             <div className='my-10'>
                 <h1 className='text-3xl font-bold  py-4'>Your Reviews</h1>
-               
+
                 {
                     reviews.map(item =>
 
@@ -194,15 +225,15 @@ const MyReviews = () => {
                                 </div>
                             </div>
                             <div className='text-3xl flex items-center gap-4 md:mt-0 mt-4 '>
-                                 <div onClick={() => { document.getElementById('my_modal_4').showModal(), dataload2(item._id) }} className='hover:text-gray-400 cursor-pointer'>
-                                <MdEdit  />
+                                <div onClick={() => { document.getElementById('my_modal_4').showModal(), dataload2(item._id) }} className='hover:text-gray-400 cursor-pointer'>
+                                    <MdEdit />
 
-                                 </div>
+                                </div>
 
-                                 <div onClick={()=> handleDeleteReview(item._id)} className='hover:text-gray-400 cursor-pointer'>
-                                <MdDelete  />
+                                <div onClick={() => handleDeleteReview(item._id)} className='hover:text-gray-400 cursor-pointer'>
+                                    <MdDelete />
 
-                                 </div>
+                                </div>
                             </div>
                         </div>
                     )
@@ -210,7 +241,7 @@ const MyReviews = () => {
 
             </div>
 
-            <Footer/>
+            <Footer />
         </div>
     );
 };

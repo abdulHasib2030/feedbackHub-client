@@ -37,7 +37,7 @@ useEffect(() => {
 [theme])
 
     const toggleTheme = (mode) => {
-        console.log(mode);
+       
         setTheme(mode);
     };
     

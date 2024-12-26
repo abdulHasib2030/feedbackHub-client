@@ -14,20 +14,41 @@ const useAxiosSecure = () => {
     const navigate = useNavigate()
 
     useEffect(()=>{
-        axiosInstance.interceptors.response.use(response =>{
+        axiosInstance.interceptors.response.use( response=>{
             return response
-        },error=>{
+        }, error =>{
+            console.log("error cot in ");
+            console.log(error);
             if(error.status === 401 || error.status === 403){
+                console.log("logout the user")
                 logoutUser()
-                .then(()=>{
+                .then(()=> {
+                    console.log("logout user");
                     navigate('/login')
-                    toast.success("Invalid credentials.")
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    console.log(err);
+                })
             }
             return Promise.reject(error)
-        })
-    })
+        } )
+    }, [])
+
+    // useEffect(()=>{
+    //     axiosInstance.interceptors.response.use(response =>{
+    //         return response
+    //     },error=>{
+    //         if(error.status === 401 || error.status === 403){
+    //             logoutUser()
+    //             .then(()=>{
+    //                 navigate('/login')
+    //                 toast.success("Invalid credentials.")
+    //             })
+    //             .catch(err => (err))
+    //         }
+    //         return Promise.reject(error)
+    //     })
+    // })
     return axiosInstance;
 };
 

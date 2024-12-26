@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { motion } from "motion/react"
 
 const Feature = ({ data }) => {
-    console.log();
+   
     return (
         <div className='my-16'> 
         <div className='flex justify-between my-5'>

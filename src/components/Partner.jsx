@@ -8,7 +8,7 @@ const Partner = () => {
     useEffect(()=>{
         axios.get(`./partner.json`)
         .then(res => setPartners(res.data))
-        .catch(err => console.log(err))
+        .catch(err => (err))
     }, [])
     return (
         <div className='my-16'>

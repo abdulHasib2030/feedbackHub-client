@@ -10,33 +10,38 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import Footer from '../components/Footer';
+import { Helmet } from 'react-helmet-async';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 
 const MyServiceDetails = () => {
-    const { user , setCountReview} = useContext(AuthContext)
+    const { user,   setCountReview,setCountService, } = useContext(AuthContext)
     const [rating, setRating] = useState(0);
     const [selectedYear, setSelectedYear] = useState(null);
     const [error, setError] = useState({})
+    const axiosSecure = useAxiosSecure()
 
-    const { result, review } = useLoaderData()
+    const { result, review, lenReview, lenService } = useLoaderData()
+    setCountReview(lenReview)
+    setCountService(lenService)
     const [data, setData] = useState(review)
     const { title, imageURL, category, description, year, company_name, website, price, _id } = result;
     // let yearFormat = year = String(year.getDate()) + '/' + String(year.getMonth()) + '/' + String(year.getFullYear())
-    const dateFormat = (data)=>{
-     const date = new Date(String(data));
+    const dateFormat = (data) => {
+        const date = new Date(String(data));
 
-    // Extract day, month, and year
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-    const year_ = date.getFullYear();
-    
-    // Format as DD/MM/YYYY
-    const formattedDate = `${day}/${month}/${year_}`;   
-    console.log(formattedDate, day, );
-    return formattedDate
+        // Extract day, month, and year
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const year_ = date.getFullYear();
+
+        // Format as DD/MM/YYYY
+        const formattedDate = `${day}/${month}/${year_}`;
+
+        return formattedDate
     }
-    
-    
+
+
     const handleReview = (e) => {
         e.preventDefault()
         // const reviewtext(e.target.reviewtext.value);
@@ -59,31 +64,46 @@ const MyServiceDetails = () => {
         // console.log(e.target.reviewtext.value, selectedYear, rating);
         const data = {
             review_text: e.target.reviewtext.value, date: selectedYear, rating: rating,
-            userPhoto: user.photoURL, name: user.displayName, service_id: _id, email:user.email, title: title,
-            service_logo: imageURL, service_name:company_name, service_website:website
+            userPhoto: user.photoURL, name: user.displayName, service_id: _id, email: user.email, title: title,
+            service_logo: imageURL, service_name: company_name, service_website: website
         }
         document.getElementById('my_modal_4').classList.add('hidden')
         // console.log(data);
-        axios.post(`${import.meta.env.VITE_URL}/add-review`, data)
+        // axios.post(`${import.meta.env.VITE_URL}/add-review`, data)
+        //     .then(res => {
+        //         // console.log(res.data.result);
+        //         // setData(res.data.allReviw)
+        //         setCountReview(res.data.lenReview)
+        //         location.reload()
+
+        //         toast.success("Successfully added your review.")
+
+
+        //     })
+        //     .catch(err => {
+
+        //     })
+        axiosSecure.post(`/add-review?${user.email}`, data)
             .then(res => {
                 // console.log(res.data.result);
                 // setData(res.data.allReviw)
                 setCountReview(res.data.lenReview)
                 location.reload()
-            
-                    toast.success("Successfully added your review.")
-                    
-            
+
+                toast.success("Successfully added your review.")
+
+
             })
             .catch(err => {
-                console.log(err.message);
-            })
 
+            })
     }
-    console.log(data.length);
-    
+
+
     return (
         <div>
+            <Helmet title={`${title} | FeedbackHub`} />
+
             <Layout />
             <div className='my-10 gap-6 md:flex justify-evenly border py-5'>
                 <div className='flex gap-4 items-center '>
@@ -207,15 +227,15 @@ const MyServiceDetails = () => {
 
                                 <div className='divider  '></div>
                                 <div className='text-start space-y-3'>
-                                <div className="rating-container">
-                                <Rating initialValue={item.rating} readonly showTooltip tooltipArray={['Terrible', 'Bad', 'Average', 'Great', 'Prefect']} size={20}></Rating>
-                                   
-                                </div>
+                                    <div className="rating-container">
+                                        <Rating initialValue={item.rating} readonly showTooltip tooltipArray={['Terrible', 'Bad', 'Average', 'Great', 'Prefect']} size={20}></Rating>
+
+                                    </div>
                                     <p className='text-justify'>
                                         {item.review_text}
-{
-    item.rating
-}
+                                        {
+                                            item.rating
+                                        }
                                     </p>
                                     <h4 className='font-bold'>Date or experience: <span className='font-normal'>{dateFormat(item.date)}</span></h4>
                                 </div>
@@ -228,21 +248,21 @@ const MyServiceDetails = () => {
 
 
                 <div className='md:col-span-4   md:order-2  ' >
-                   <div className='space-y-2 border rounded-xl mb-4 p-4  md:mt-0 text-start '>
-                   <h4 className='font-bold '>Company name: <span className='font-normal'>{company_name}</span>
-                    </h4>
-                    <h4 className='font-bold '>Price: <span className='font-normal'>$ {price}</span>
-                    </h4>
-                    <h4 className='font-bold '>Added Date: <span className='font-normal'>{dateFormat(year)}</span>
-                    </h4>
-                    <h4 className='font-bold '>Description: <span className='font-normal'>{description}</span>
-                    </h4>
-                   </div>
+                    <div className='space-y-2 border rounded-xl mb-4 p-4  md:mt-0 text-start '>
+                        <h4 className='font-bold '>Company name: <span className='font-normal'>{company_name}</span>
+                        </h4>
+                        <h4 className='font-bold '>Price: <span className='font-normal'>$ {price}</span>
+                        </h4>
+                        <h4 className='font-bold '>Added Date: <span className='font-normal'>{dateFormat(year)}</span>
+                        </h4>
+                        <h4 className='font-bold '>Description: <span className='font-normal'>{description}</span>
+                        </h4>
+                    </div>
 
                 </div>
             </div>
 
-            <Footer/>
+            <Footer />
         </div>
     );
 };

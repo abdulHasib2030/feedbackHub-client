@@ -9,21 +9,25 @@ import RecentReview from '../components/RecentReview';
 import { AuthContext } from '../provider/AuthProvider';
 import MostReviewService from '../components/MostReviewService';
 import Footer from '../components/Footer';
+import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
-    const {result, lenReview, lenService,  recentReview, mostReviewService}= useLoaderData()
+    const { result, lenReview, lenService, recentReview, mostReviewService } = useLoaderData()
     const { countReview, setCountReview,
-        countService, setCountService,}= useContext(AuthContext)
-        setCountReview(lenReview)
-        setCountService(lenService)
+        countService, setCountService, } = useContext(AuthContext)
+    setCountReview(lenReview)
+    setCountService(lenService)
     return (
         <div className='relative '>
-           <Layout></Layout>
+            <Helmet
+                title="FeedbackHub | Home" />
+
+            <Layout></Layout>
             <Banner></Banner>
             <Feature data={result}></Feature>
             <Partner></Partner>
-            <RecentReview data = { recentReview}></RecentReview>
-            <MostReviewService data= {mostReviewService}></MostReviewService>
+            <RecentReview data={recentReview}></RecentReview>
+            <MostReviewService data={mostReviewService}></MostReviewService>
             <Footer></Footer>
         </div>
     );

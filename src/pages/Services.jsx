@@ -11,14 +11,17 @@ import { Link, useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import axios from 'axios';
 import Footer from '../components/Footer';
+import { Helmet } from 'react-helmet-async';
 
 const MyServices = () => {
-    const { user } = useContext(AuthContext)
-    const Service = useLoaderData()
-    const [data, setData] = useState(Service)
+    const { user, setCountReview, setCountService } = useContext(AuthContext)
+    const {result, lenReview} = useLoaderData()
+    const [data, setData] = useState(result)
+    setCountReview(lenReview)
+    setCountService(result.length)
 
     const handleFilter = (slug) =>{
-        console.log(slug);
+       
        
             axios.get(`${import.meta.env.VITE_URL}/service/${slug}`)
             .then(res => setData(res.data))
@@ -27,6 +30,8 @@ const MyServices = () => {
 
     return (
         <div>
+            < Helmet title='Services | FeedbackHub' />
+                           
             <Layout />
             <div className='my-10'>
                 <h1 className='text-center text-3xl font-bold'>All Services</h1>

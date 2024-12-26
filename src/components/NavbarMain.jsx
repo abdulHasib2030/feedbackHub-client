@@ -81,7 +81,7 @@ const NavbarMain = () => {
             color="blue-gray"
             className="p-1 font-normal"
           >
-            <NavLink to={'/add-services'} className="flex items-center">
+            <NavLink to={'/add-services'} state={'/add-services'} className="flex items-center">
               Add Service
             </NavLink>
           </Typography>
@@ -91,7 +91,7 @@ const NavbarMain = () => {
             color="blue-gray"
             className="p-1 font-normal"
           >
-            <NavLink to={'/my-reviews'} className="flex items-center">
+            <NavLink to={'/my-reviews'} state={'/my-reviews'} className="flex items-center">
               My Reviews
             </NavLink>
           </Typography>
@@ -101,7 +101,7 @@ const NavbarMain = () => {
             color="blue-gray"
             className="p-1 font-normal"
           >
-            <NavLink to={`/my-services/${user.email}`} className="flex items-center">
+            <NavLink to={`/my-services/${user.email}`} state={`/my-services/${user.email}`} className="flex items-center">
               My Services
             </NavLink>
           </Typography>

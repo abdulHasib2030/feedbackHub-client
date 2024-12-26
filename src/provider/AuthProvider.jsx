@@ -4,6 +4,7 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged,
 import { auth } from '../firebase/firebase';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 
 const provider = new GoogleAuthProvider()
@@ -34,8 +35,28 @@ const AuthProvider = ({children}) => {
 
    useEffect(()=>{
     const subscribe  = onAuthStateChanged(auth, (currentUser)=>{
-        setLoading(false)
-         currentUser ? setUser(currentUser) : setUser(null)
+        currentUser ? setUser(currentUser) : setUser(null)
+        
+        if(currentUser?.email){
+            const user = {email: currentUser.email}
+            axios.post(`${import.meta.env.VITE_URL}/jwt`, user, {
+                withCredentials:true
+            })
+            .then(res => {console.log(res.data)
+                setLoading(false)
+            })
+        }
+        else{
+            axios.post(`${import.meta.env.VITE_URL}/logout`, {},{
+                withCredentials:true
+            })
+            .then(res => {console.log(res.data)
+                setLoading(false)
+            })
+        }
+
+      
+        
     })
     return ()=>{
         subscribe()
@@ -59,8 +80,9 @@ const AuthProvider = ({children}) => {
         updateUserProfile,
         logoutUser,
         googleAuth,
-        countReview, setCountReview,
-        countService, setCountService,
+        countReview, 
+        setCountReview,setCountService,
+        countService, 
     }
     return (
        <AuthContext.Provider value={authInfo}>

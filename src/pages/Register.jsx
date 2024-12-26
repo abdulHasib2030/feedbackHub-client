@@ -12,18 +12,22 @@ import {
 } from "@material-tailwind/react";
 import Layout from '../Layout/Layout';
 import img from '../assets/register.json'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import { use } from 'react';
 import toast from 'react-hot-toast';
+import { Helmet } from 'react-helmet-async';
+import Footer from '../components/Footer';
 
 const Register = () => {
 
-    const {googleAuth, createUser, setUser, updateUserProfile, setLoading } = useContext(AuthContext)
+    const {googleAuth, createUser, setUser, updateUserProfile, setLoading , setCountReview,setCountService} = useContext(AuthContext)
     const location = useLocation()
     const navigate = useNavigate()
     const [error, setError] = useState({})
-
+    const {lenReview, lenService} = useLoaderData()
+   setCountReview(lenReview)
+   setCountService(lenService)
 
     const handleRegister = (e) => {
         e.preventDefault()
@@ -33,7 +37,7 @@ const Register = () => {
         const photoURL = form.photoURL.value;
         const password = form.password.value;
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
-        console.log(name, email, photoURL, password);
+        
         if (name.length < 5) {
             setError({ name: "Name can't 5 character less." })
             return
@@ -52,7 +56,7 @@ const Register = () => {
             setError({ password: "Password must meet one Uppercase, lowercase letter and at least 6 chanacters long." })
             return
         }
-        console.log(name, email, photoURL, password);
+        
        
 
        
@@ -60,7 +64,7 @@ const Register = () => {
             .then((result) => {
                 const user = result.user;
                 setUser(user)
-                console.log(user);
+              
                 updateUserProfile({ displayName: name, photoURL: photoURL })
                     .then(() => {
                       toast.success('Successfully Registered')
@@ -108,6 +112,8 @@ const Register = () => {
 
     return (
         <div>
+            < Helmet  title='Register | FeedbackHub'/>
+                            
             <Layout />
             <section className=" my-10" >
                 <div className=" h-screen grid place-items-center">

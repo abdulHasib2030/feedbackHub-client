@@ -29,19 +29,22 @@ const router = createBrowserRouter([
             },
             {
                 path:'/login',
-                element:<Logredirect><Login/></Logredirect>
+                element:<Logredirect><Login/></Logredirect>,
+                loader: ()=> fetch(`${import.meta.env.VITE_URL}/login`)
             },
             {
                 path:'/register',
-                element:<Logredirect><Register/></Logredirect>
+                element:<Logredirect><Register/></Logredirect>,
+                loader: ()=> fetch(`${import.meta.env.VITE_URL}/register`)
             },
             {
                 path: '/add-services',
-                element: <PrivateRoute><AddServices></AddServices></PrivateRoute>
+                element: <PrivateRoute><AddServices></AddServices></PrivateRoute>,
+                loader: ()=> fetch(`${import.meta.env.VITE_URL}/addSerShow`)
             },
             {
                 path: '/services',
-                element: <PrivateRoute><Services></Services></PrivateRoute>,
+                element: <Services></Services>,
                 loader: () => fetch(`${import.meta.env.VITE_URL}/services`),
             },
             {

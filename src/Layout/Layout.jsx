@@ -9,7 +9,7 @@ import CountUp from 'react-countup';
 import Footer from '../components/Footer';
 const Layout = () => {
     const {loading, countReview, countService} = useContext(AuthContext)
-            console.log(countReview, countService);
+           
    if(loading) return <Loading/>
     return (
         <div className='relative'>

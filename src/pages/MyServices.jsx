@@ -7,27 +7,33 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { useLoaderData } from "react-router-dom";
 import Footer from "../components/Footer";
+import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 const MyServices = () => {
-    const { user } = useContext(AuthContext)
+    const { user ,  setCountReview,setCountService,} = useContext(AuthContext)
     const [error, setError] = useState({})
     const [selectedYear, setSelectedYear] = useState(null)
     const [singleItem, setSingleItem] = useState()
     const [search, setSearch] = useState("")
-    const loadData = useLoaderData()
-    const [myService, setMyServices] = useState(loadData)
+    const {result, lenReview, lenService} = useLoaderData()
+    const [myService, setMyServices] = useState(result)
+
+    const axiosSecure = useAxiosSecure()
+   setCountReview(lenReview)
+   setCountService(lenService)
 
 
-
-
+   
 
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_URL}/myServices/${user.email}?searchParams=${search}`)
             .then((res) => res.json())
             .then((searchData) => {
-                setMyServices(searchData)
+                setMyServices(searchData.result)
+                console.log(searchData);
             })
 
     }, [search]);
@@ -70,10 +76,26 @@ const MyServices = () => {
         const year = selectedYear ? selectedYear : singleItem?.year
 
         const data = { imageURL, title, company_name, website, description, category, price, year, user: user.email, service_id: singleItem?._id }
-        console.log(data);
-        axios.patch(`${import.meta.env.VITE_URL}/update-service`, data)
+
+        // axios.patch(`${import.meta.env.VITE_URL}/update-service`, data)
+        //     .then(res => {
+
+        //         if (res.data.result.acknowledged) {
+        //             document.getElementById('closeModal').click()
+        //             setSelectedYear(null)
+        //             setMyServices(res.data.allService)
+        //             toast.success("Successfully updated service.")
+
+
+        //         }
+        //     })
+        //     .catch(err => {
+
+        //     })
+
+        axiosSecure.patch(`/update-service?email${user.email}`, data)
             .then(res => {
-                console.log(res.data.allService, res.data.result);
+
                 if (res.data.result.acknowledged) {
                     document.getElementById('closeModal').click()
                     setSelectedYear(null)
@@ -84,13 +106,13 @@ const MyServices = () => {
                 }
             })
             .catch(err => {
-                console.log(err);
+
             })
     }
 
     const dataload = (id) => {
         const singleData = myService.find(item => item._id === id)
-        console.log(singleData.year, singleData);
+
         setSingleItem(singleData)
     }
 
@@ -106,16 +128,16 @@ const MyServices = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`${import.meta.env.VITE_URL}/service/delete/${id}`)
+
+
+                axiosSecure.delete(`/service/delete/${id}?email=${user.email}`)
                     .then(res => {
-                        console.log(res.data);
-                        // location.reload()
                         const filterData = myService.filter(item => item._id !== id)
                         toast.success("Successfully deleted service.")
                         setMyServices(filterData)
                     })
                     .then(err => {
-                        console.log(err.message);
+
                     })
             }
         })
@@ -125,6 +147,8 @@ const MyServices = () => {
 
     return (
         <div>
+            <Helmet title='My Services | FeedbackHub' />
+
             <Layout />
 
 
@@ -195,33 +219,33 @@ const MyServices = () => {
                                         <option disabled selected>Choose category</option>
                                         {
                                             singleItem?.category_slug === 'home-cleaning' ?
-                                        <option selected  value="home-cleaning">Home Cleaning</option>:
-                                        <option  value="home-cleaning">Home Cleaning</option>
+                                                <option selected value="home-cleaning">Home Cleaning</option> :
+                                                <option value="home-cleaning">Home Cleaning</option>
                                         }
                                         {
-                                            singleItem?.category_slug === 'electronics-repair' ? 
-                                            <option selected value="electronics-repair">Electronics Repair</option>
-                                            :<option value="electronics-repair">Electronics Repair</option>
+                                            singleItem?.category_slug === 'electronics-repair' ?
+                                                <option selected value="electronics-repair">Electronics Repair</option>
+                                                : <option value="electronics-repair">Electronics Repair</option>
 
                                         }
                                         {
-                                            singleItem?.category_slug === 'Catering Services' ? 
-                                            <option selected value="catering-services">Catering Services</option>
-                                            :<option value="catering-services">Catering Services</option>
+                                            singleItem?.category_slug === 'Catering Services' ?
+                                                <option selected value="catering-services">Catering Services</option>
+                                                : <option value="catering-services">Catering Services</option>
 
                                         }
 
-                                       {
-                                            singleItem?.category_slug === 'moving-relocation' ? 
-                                            <option selected value="moving-relocation">Moving & Relocation</option>
-                                            :<option value="moving-relocation">Moving & Relocation</option>
-                                            
-                                       }
-                                       {
-                                        singleItem?.category_slug === 'fitness-training'?
-                                        <option selected value="fitness-training">Fitness Training</option>
-                                        :<option value="fitness-training">Fitness Training</option>
-                                       }
+                                        {
+                                            singleItem?.category_slug === 'moving-relocation' ?
+                                                <option selected value="moving-relocation">Moving & Relocation</option>
+                                                : <option value="moving-relocation">Moving & Relocation</option>
+
+                                        }
+                                        {
+                                            singleItem?.category_slug === 'fitness-training' ?
+                                                <option selected value="fitness-training">Fitness Training</option>
+                                                : <option value="fitness-training">Fitness Training</option>
+                                        }
                                     </select>
                                     {
                                         error && error?.category && <p className='text-red-400'>
@@ -354,7 +378,7 @@ const MyServices = () => {
                 </table>
             </div>
 
-            <Footer/>
+            <Footer />
         </div>
     );
 };

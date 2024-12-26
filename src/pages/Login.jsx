@@ -10,36 +10,34 @@ import {
 } from "@material-tailwind/react";
 import Layout from '../Layout/Layout';
 import img from '../assets/login.json'
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import Swal from 'sweetalert2';
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import Footer from '../components/Footer';
+import { Helmet } from 'react-helmet-async';
 
 
 const Login = () => {
-    const { setUser, setLoading, loginUser, googleAuth } = useContext(AuthContext)
+    const { setUser, setLoading, loginUser, googleAuth, setCountReview, setCountService } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
+    const {lenReview, lenService} = useLoaderData()
+    setCountReview(lenReview)
+    setCountService(lenService)
 
     const handleLogin = (e) => {
         e.preventDefault()
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-        // console.log(email, password);
+      
         loginUser(email, password)
             .then(res => {
                 const user = res.user;
                 setUser(user)
-                const jwtUser = { email: email }
-                axios.post(`${import.meta.env.VITE_URL}/jwt`, jwtUser, {
-                    withCredentials: true,
-                })
-                    .then(res => {
-                        console.log(res.data);
-                    })
+               
                 toast.success("Successfully login.")
                 navigate(location.state ? location.state : "/"
                 )
@@ -61,6 +59,8 @@ const Login = () => {
 
     return (
         <div>
+             <Helmet title='Login | FeedbackHub' />
+                   
             <Layout />
             <section className=" my-10" >
                 <div className="place-items-center h-screen grid ">

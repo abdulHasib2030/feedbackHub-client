@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Layout from '../Layout/Layout';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 import DatePicker from "react-datepicker";
 import axios from 'axios';
@@ -8,16 +8,22 @@ import Swal from 'sweetalert2';
 import "react-datepicker/dist/react-datepicker.css";
 import toast from 'react-hot-toast';
 import Footer from '../components/Footer';
+import { Helmet } from "react-helmet-async";
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const AddServices = () => {
 
     const navigate = useNavigate()
-    const { user,   setCountService, } = useContext(AuthContext)
+    const { user, setCountService, setCountReview,} = useContext(AuthContext)
     const [selectedYear, setSelectedYear] = useState(new Date());
 
     const [error, setError] = useState({})
     // const [addCategory, setAddCategory] = useState('')
     const [category, setCategory] = useState([])
+    const axiosSecure = useAxiosSecure()
+    const {lenService, lenReview} = useLoaderData()
+    setCountReview(lenReview)
+    setCountService(lenService)
 
     const handleAddService = (e) => {
         e.preventDefault();
@@ -30,8 +36,8 @@ const AddServices = () => {
         const category = form.category.value;
         const price = form.price.value;
 
+        
 
- console.log(category);
         if (!imageURL) return setError({ imageURL: "Provide a image url" })
         if (!title || title.length < 2) {
             return setError({ title: "The title must be at least 2 characters long." })
@@ -57,12 +63,29 @@ const AddServices = () => {
         }
 
         let cat = category.split('-').join(' ')
-         cat = (cat.charAt(0).toUpperCase() + cat.slice(1));
+        cat = (cat.charAt(0).toUpperCase() + cat.slice(1));
         const year = selectedYear
 
-        const data = { imageURL, title, company_name, website, description,category:cat, category_slug:category, price, year, user: user.email }
+        const data = { imageURL, title, company_name, website, description, category: cat, category_slug: category, price, year, user: user.email }
 
-        axios.post(`${import.meta.env.VITE_URL}/addService`, data)
+        // axios.post(`${import.meta.env.VITE_URL}/addService`, data)
+        //     .then(res => {
+        //         //    if(res.data.ac)
+        //         if (res.data.result.acknowledged) {
+        //             setCountService(res.data.lenService)
+        //             toast.success('Successfully Added Service')
+        //             navigate(`/my-services/${user.email}`)
+        //         }
+        //     })
+        //     .catch(err => {
+        //         Swal.fire({
+        //             title: err.message,
+        //             icon: "error",
+        //             draggable: true,
+        //         })
+        //     })
+
+        axiosSecure.post(`/addService?email=${user.email}`, data)
             .then(res => {
                 //    if(res.data.ac)
                 if (res.data.result.acknowledged) {
@@ -80,12 +103,13 @@ const AddServices = () => {
             })
     }
 
-    
 
-   
-    console.log(category);
+
     return (
         <div>
+            <Helmet
+                title="Add Service | FeedbackHub" />
+
             <Layout></Layout>
             {/* add services form */}
 
@@ -159,7 +183,7 @@ const AddServices = () => {
                                     {error.category}
                                 </p>
                             }
-                           
+
                         </div>
                         <div>
                             <label className="" >Price</label>
@@ -208,7 +232,7 @@ const AddServices = () => {
                 </form>
             </section>
 
-        <Footer></Footer>
+            <Footer></Footer>
         </div>
     );
 };

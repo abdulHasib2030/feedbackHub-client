@@ -2,11 +2,13 @@ import React from 'react';
 import { Typography } from "@material-tailwind/react";
 import { FlagIcon } from "@heroicons/react/24/solid";
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const ErrorPage = () => {
-    return (
-        <div>
-            <div className="h-screen mx-auto grid place-items-center text-center px-8">
+  return (
+    <div>
+     
+      <div className="h-screen mx-auto grid place-items-center text-center px-8">
         <div>
           <FlagIcon className="w-20 h-20 mx-auto" />
           <Typography
@@ -20,13 +22,13 @@ const ErrorPage = () => {
             Don&apos;t worry, our team is already on it.Please try refreshing
             the page or come back later.
           </Typography>
-         <Link to={'/'}> <button  className="uppercase border px-6 py-2 rounded-xl hover:bg-gray-400 hover:text-white">
-           back home
-          </button></Link> 
+          <Link to={'/'}> <button className="uppercase border px-6 py-2 rounded-xl hover:bg-gray-400 hover:text-white">
+            back home
+          </button></Link>
         </div>
       </div>
-        </div>
-    );
+    </div>
+  );
 };
 
 export default ErrorPage;
