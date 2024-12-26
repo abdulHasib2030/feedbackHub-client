@@ -53,6 +53,14 @@ npm i swiper
 ```
 Install FeedbackHub with npm backend side
 
+```bash
+npm i cookie-parser
+npm i cors
+npm i dotenv
+npm i express
+npm i jsonwebtoken
+npm i mongodb
+```
     
 ## 🔗 Live Links
 https://feedbackhub-10c5d.web.app/
