@@ -1,41 +1,16 @@
 import React, { useContext, useState } from 'react';
-import {
-  Navbar,
-  MobileNav,
-  Typography,
-  Button,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
 
-  IconButton,
-  Card,
-} from "@material-tailwind/react";
-
-import {
-  CubeTransparentIcon,
-  UserCircleIcon,
-  CodeBracketSquareIcon,
-  Square3Stack3DIcon,
-  ChevronDownIcon,
-  Cog6ToothIcon,
-  InboxArrowDownIcon,
-  LifebuoyIcon,
-  PowerIcon,
-  RocketLaunchIcon,
-  Bars2Icon,
-} from "@heroicons/react/24/solid";
-
+import { MdOutlineDarkMode, MdLightMode, MdDarkMode } from "react-icons/md";
 
 import logo from '../assets/logo.png'
+import lightlogo from '../assets/logo_light.png'
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
 
 
 const NavbarMain = () => {
   const { user, logoutUser, countReview, countService } = useContext(AuthContext)
+  const [themeicon, setThemeIcon] = useState(localStorage.getItem('theme') === 'dark' ? true : false)
   const [openNav, setOpenNav] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const closeMenu = () => setIsMenuOpen(false);
@@ -43,229 +18,164 @@ const NavbarMain = () => {
     logoutUser()
   }
 
-  React.useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false),
-    );
-  }, []);
+  const toggleDarkMode = () => {
+    const htmlElement = document.documentElement;
+    if (htmlElement.classList.contains('dark')) {
+      htmlElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      setThemeIcon(false)
+    } else {
+      htmlElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setThemeIcon(true)
+    }
+  };
 
-  const navList = (
-    <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Link to={'/'} className="flex items-center">
-          Home
-        </Link>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <NavLink to={'/services'} className="flex items-center">
+  // Apply the saved theme on page load
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark');
+
+  } else {
+    document.documentElement.classList.remove('dark');
+
+  }
+
+console.log(isMenuOpen);
+  return (
+    <div className="fixed left-0 right-0 top-0 z-10  ">
+
+
+      <nav className="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+        <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+          <Link to={'/'} className="flex items-center space-x-3 rtl:space-x-reverse">
+            {
+              themeicon ?
+                <img src={lightlogo} className="h-12" alt="Flowbite Logo" />
+                : <img src={logo} className="h-12" alt="Flowbite Logo" />
+
+            }
+          </Link>
+          <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            {/* <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get started</button> */}
+            <button data-collapse-toggle="navbar-sticky" type="button" onClick={()=> isMenuOpen?setIsMenuOpen(false):setIsMenuOpen(true)} className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+              <span className="sr-only">Open main menu</span>
+              <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+              </svg>
+            </button>
+
+            <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+              <ul className="flex flex-col items-center p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li>
+                  <Link to={'/'} className="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500">    <Link to={'/'} >
+                    Home
+                  </Link></Link>
+                </li>
+                <li>
+                <NavLink to={'/services'} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
           Services
         </NavLink>
-      </Typography>
-      {
-        user &&
-        <>
-          <Typography
-            as="li"
-            variant="small"
-            color="blue-gray"
-            className="p-1 font-normal"
-          >
-            <NavLink to={'/add-services'} state={'/add-services'} className="flex items-center">
+                </li>
+                {
+                  user &&  <>
+                   <li>
+                 
+                  <NavLink to={'/add-services'} state={'/add-services'} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
               Add Service
             </NavLink>
-          </Typography>
-          <Typography
-            as="li"
-            variant="small"
-            color="blue-gray"
-            className="p-1 font-normal"
-          >
-            <NavLink to={'/my-reviews'} state={'/my-reviews'} className="flex items-center">
+               </li>
+               <li>
+               <NavLink to={'/my-reviews'} state={'/my-reviews'} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
               My Reviews
             </NavLink>
-          </Typography>
-          <Typography
-            as="li"
-            variant="small"
-            color="blue-gray"
-            className="p-1 font-normal"
-          >
-            <NavLink to={`/my-services/${user.email}`} state={`/my-services/${user.email}`} className="flex items-center">
+               </li>
+               <li>
+               <NavLink to={`/my-services/${user.email}`} state={`/my-services/${user.email}`} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
               My Services
             </NavLink>
-          </Typography>
-
-        </>
-      }
-
-    </ul>
-  );
-
-
-  return (
-    <div className="-mt-6 relative">
-      <Navbar className="sticky top-0 z-10 border-none h-max  rounded-none px-4 py-2 lg:px-8 lg:py-4 ">
-        <div className="flex items-center justify-between text-black">
-          <Typography
-            as="a"
-            href="#"
-            className="text-4xl flex items-center font-bold cursor-pointer py-1.5 "
-          >
-            <Link to={'/'}>
-              <img src={logo} alt="" className='md:w-28 w-20' />
-            </Link>
-          </Typography>
-          <div className="flex items-center gap-4 ">
-            <div className="mr-4 hidden lg:block">{navList}</div>
-            {
-              user ?
-                <div className=' list-none lg:block hidden'>
-                  <div className='flex items-center gap-3 '>
-
-                  
-                  <div className="avatar">
-                    <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-                      <img src={user.photoURL} />
-                    </div>
-                  </div>
-                  <Typography
-
-                    as="li"
-                    variant="small"
-                    color="blue-gray"
-                    className="p-1 font-normal"
-                  >
-                    <Link onClick={handleLogout} className="flex items-center gap-2 font-bold hover:text-red-500">
-
-                      {React.createElement(PowerIcon, {
-                        className: `h-4 w-4`,
-                        strokeWidth: 2,
-                      })}
-                      Logout
-                    </Link>
-                  </Typography>
-</div>
-                </div>
-                :
-                <div className="flex items-center gap-x-1">
-                  <Button
-                    variant="text"
-                    size="sm"
-                    className="hidden lg:inline-block"
-                  >
-                    <Link to={'/login'}>Log In</Link >
-                  </Button>
-                  <Button
-                    variant="gradient"
-                    size="sm"
-                    className="hidden lg:inline-block text-black"
-                  >
-                    <Link to={'/register'}>Register</Link >
-                  </Button>
-                </div>
-            }
-
-            <div className='flex gap-3 lg:hidden '>
-              <p className='font-bold'>Total Review: {countReview}</p>
-              <p className='font-bold'>Total Service: {countService } </p>
+               </li>
+               <li>
+               <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={handleLogout}>Logout</button>
+               </li>
+                  </>
+                }
+               
+                <li>
+                  <a href="#" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+                </li>
+               
+                <li className='flex items-center gap-3'>
+                <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"><Link to={'/login'}>Login</Link></button>
+                <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"><Link to={'/register'}>Register</Link></button>
+                  {
+                    themeicon ? <MdDarkMode onClick={toggleDarkMode} className='mr-3 text-2xl text-white cursor-pointer' /> :
+                      <MdLightMode onClick={toggleDarkMode} className='mr-3 text-2xl cursor-pointer ' />
+                  }
+                </li>
+              
+              </ul>
             </div>
 
-            <IconButton
-              variant="text"
-              className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-              ripple={false}
-              onClick={() => setOpenNav(!openNav)}
-            >
-              {openNav ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  className="h-6 w-6"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              )}
-            </IconButton>
+            <div className={`absolute right-0 top-14 ${isMenuOpen ? 'block': 'hidden'}`}>
+            <ul className="flex flex-col items-center p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li>
+                  <Link to={'/'} className="block py-2 px-3 text-white rounded-sm md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500">    <Link to={'/'} >
+                    Home
+                  </Link></Link>
+                </li>
+                <li>
+                <NavLink to={'/services'} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+          Services
+        </NavLink>
+                </li>
+                {
+                  user &&  <>
+                   <li>
+                 
+                  <NavLink to={'/add-services'} state={'/add-services'} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+              Add Service
+            </NavLink>
+               </li>
+               <li>
+               <NavLink to={'/my-reviews'} state={'/my-reviews'} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+              My Reviews
+            </NavLink>
+               </li>
+               <li>
+               <NavLink to={`/my-services/${user.email}`} state={`/my-services/${user.email}`} className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+              My Services
+            </NavLink>
+               </li>
+               <li>
+               <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={handleLogout}>Logout</button>
+               </li>
+                  </>
+                }
+               
+                <li>
+                  <a href="#" className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
+                </li>
+               
+                <li>
+                <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"><Link to={'/login'}>Login</Link></button>
+                </li>
+               <li>
+                <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"><Link to={'/register'}>Register</Link></button>
+
+               </li>
+                  {
+                    themeicon ? <MdDarkMode onClick={toggleDarkMode} className='mr-3 text-2xl text-white cursor-pointer' /> :
+                      <MdLightMode onClick={toggleDarkMode} className='mr-3 text-2xl cursor-pointer ' />
+                  }
+              
+              
+              </ul>
+            </div>
           </div>
+
         </div>
-
-        <MobileNav className='text-black' open={openNav}>
-          {navList}
-         
-          {
-            user ? 
-            <div className='flex items-center list-none gap-3 '>
-            <div className="avatar">
-              <div className="ring-primary ring-offset-base-100 w-10 rounded-full ring ring-offset-2">
-                <img src={user.photoURL} />
-              </div>
-            </div>
-            <Typography
-
-              as="li"
-              variant="small"
-              color="blue-gray"
-              className="p-1 font-normal"
-            >
-              <Link onClick={handleLogout} className="flex items-center gap-2 font-bold hover:text-red-500">
-
-                {React.createElement(PowerIcon, {
-                  className: `h-4 w-4`,
-                  strokeWidth: 2,
-                })}
-                Logout
-              </Link>
-            </Typography>
-
-          </div>:
-            <div className="flex items-center gap-x-1">
-              <Button fullWidth variant="text" size="sm" className="">
-                <Link to={'/login'}>Log In</Link >
-              </Button>
-              <Button fullWidth variant="gradient" size="sm" className="text-black ">
-                <Link to={'/register'} className=''>Register</Link >
-              </Button>
-            </div>
-          }
-
-
-
-        </MobileNav>
-
-
-      </Navbar>
+      </nav>
 
     </div>
   );

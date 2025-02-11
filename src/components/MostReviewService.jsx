@@ -25,14 +25,14 @@ const MostReviewService = ({data}) => {
                      animate={{ opacity: 1, y: 0 }}
                      transition={{ duration: 0.5, delay: index * 0.1 }}
                      >
-                         <Card className="border mt-4 ">
+                         <Card className="border mt-4 h-full ">
                        <CardBody while>
                           <img src={item.img} alt="" className='w-full h-96'/>
                            <Typography variant="h5" color="blue-gray" className="mb-2 text-3xl text-black">
                                {item.title}
                            </Typography>
                            <Typography>
-                              {item.description}
+                              {item.description.slice(0, 100)}...
                            </Typography>
                            <Typography>
                               Price: ${item.price}

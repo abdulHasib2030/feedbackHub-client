@@ -10,6 +10,8 @@ import { AuthContext } from '../provider/AuthProvider';
 import MostReviewService from '../components/MostReviewService';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
+import Count from '../components/Count';
+import NavbarMain from '../components/NavbarMain';
 
 const Home = () => {
     const { result, lenReview, lenService, recentReview, mostReviewService } = useLoaderData()
@@ -21,12 +23,14 @@ const Home = () => {
         <div className='relative '>
             <Helmet
                 title="FeedbackHub | Home" />
-
-            <Layout></Layout>
+{/* 
+            <Layout ></Layout> */}
+            <NavbarMain></NavbarMain>
             <Banner></Banner>
             <Feature data={result}></Feature>
             <Partner></Partner>
             <RecentReview data={recentReview}></RecentReview>
+            <Count></Count>
             <MostReviewService data={mostReviewService}></MostReviewService>
             <Footer></Footer>
         </div>

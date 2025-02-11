@@ -33,7 +33,7 @@ const MyServices = () => {
             .then((res) => res.json())
             .then((searchData) => {
                 setMyServices(searchData.result)
-                console.log(searchData);
+          
             })
 
     }, [search]);
@@ -93,7 +93,7 @@ const MyServices = () => {
 
         //     })
 
-        axiosSecure.patch(`/update-service?email${user.email}`, data)
+        axiosSecure.patch(`/update-service?email=${user.email}`, data)
             .then(res => {
 
                 if (res.data.result.acknowledged) {

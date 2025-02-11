@@ -15,7 +15,7 @@ const Feature = ({ data }) => {
         <div className='my-16'> 
         <div className='flex justify-between my-5'>
             <h1 className='text-3xl font-bold  text-start'>Feature Service</h1>
-            <Link to={'/services'} className='rounded-full border-2 cursor-pointer border-blue-600 text-blue-600 font-bold px-2 py-1'>See more</Link>
+            <Link to={'/services'} className='rounded-full border-2 cursor-pointer border-blue-600 text-blue-600 font-bold px-2 py-1 hover:bg-blue-600 hover:text-white'>See more</Link>
         </div>
         <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-9'>
             {
@@ -27,16 +27,16 @@ const Feature = ({ data }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                  <Card className="border mt-4 ">
+                  <Card className="border mt-4 h-full">
                 <CardBody while>
-                   <img src={item.imageURL} alt="" className='w-full h-96'/>
+                   <img src={item.imageURL} alt="" className='w-full h-72'/>
                     <Typography variant="h5" color="blue-gray" className="mb-2">
                         {item.title}
                     </Typography>
                     <Typography>
-                       {item.description}
+                       {item.description.slice(0, 100)}...
                     </Typography>
-                    <Typography>
+                    <Typography className='text-justify'>
                        Price: ${item.price}
                     </Typography>
                 </CardBody>

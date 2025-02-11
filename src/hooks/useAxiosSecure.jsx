@@ -17,17 +17,17 @@ const useAxiosSecure = () => {
         axiosInstance.interceptors.response.use( response=>{
             return response
         }, error =>{
-            console.log("error cot in ");
-            console.log(error);
+          
+          
             if(error.status === 401 || error.status === 403){
-                console.log("logout the user")
+               
                 logoutUser()
                 .then(()=> {
-                    console.log("logout user");
+                    
                     navigate('/login')
                 })
                 .catch(err => {
-                    console.log(err);
+                    
                 })
             }
             return Promise.reject(error)

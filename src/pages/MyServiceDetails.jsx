@@ -61,14 +61,14 @@ const MyServiceDetails = () => {
         else {
             setError({ err: "Something wrong" })
         }
-        // console.log(e.target.reviewtext.value, selectedYear, rating);
+       
         const data = {
             review_text: e.target.reviewtext.value, date: selectedYear, rating: rating,
             userPhoto: user.photoURL, name: user.displayName, service_id: _id, email: user.email, title: title,
             service_logo: imageURL, service_name: company_name, service_website: website
         }
         document.getElementById('my_modal_4').classList.add('hidden')
-        // console.log(data);
+        
         // axios.post(`${import.meta.env.VITE_URL}/add-review`, data)
         //     .then(res => {
         //         // console.log(res.data.result);
@@ -83,9 +83,9 @@ const MyServiceDetails = () => {
         //     .catch(err => {
 
         //     })
-        axiosSecure.post(`/add-review?${user.email}`, data)
+        axiosSecure.post(`/add-review?email=${user.email}`, data)
             .then(res => {
-                // console.log(res.data.result);
+                
                 // setData(res.data.allReviw)
                 setCountReview(res.data.lenReview)
                 location.reload()
@@ -117,9 +117,9 @@ const MyServiceDetails = () => {
 
                     </div>
                 </div>
-                <div className='mt-5 md:mt-0'>
-                    <p className='border text-start border-blue-500 p-3'>
-                        <Link to={website} className=' font-bold flex text-xl items-center gap-2'><FaExternalLinkAlt /> {website}</Link>
+                <div className='mt-5 md:mt-0 w-1/3'>
+                    <p className='border text-start border-blue-500 p-3 '>
+                        <Link to={website} className=' font-bold flex text-xl items-center gap-2 overflow-hidden'><FaExternalLinkAlt /> {website}</Link>
                         Visit this website</p>
                 </div>
             </div>

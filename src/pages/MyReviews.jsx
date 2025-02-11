@@ -31,7 +31,7 @@ const MyReviews = () => {
                 setSelectedYear(res.data.result.date)
                 setCountReview(res.data.lenReview)
                 setCountService(res.data.lenService)
-            // console.log(res.data.lenReview, res.data.lenService, res.data.result);
+            
             })
     }, [user.email])
 
@@ -40,7 +40,7 @@ const MyReviews = () => {
     const handleUpdateReview = (e) => {
         e.preventDefault()
         const text = e.target.reviewtext.value;
-        // console.log(text, selectedYear, rating);
+        
         // setRating(editData.rating)
         if (!text) {
             setError({ text: "Required review text." })

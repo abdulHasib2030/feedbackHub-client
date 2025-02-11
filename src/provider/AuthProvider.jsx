@@ -42,7 +42,7 @@ const AuthProvider = ({children}) => {
             axios.post(`${import.meta.env.VITE_URL}/jwt`, user, {
                 withCredentials:true
             })
-            .then(res => {console.log(res.data)
+            .then(res => {
                 setLoading(false)
             })
         }
@@ -50,7 +50,7 @@ const AuthProvider = ({children}) => {
             axios.post(`${import.meta.env.VITE_URL}/logout`, {},{
                 withCredentials:true
             })
-            .then(res => {console.log(res.data)
+            .then(res => {
                 setLoading(false)
             })
         }
