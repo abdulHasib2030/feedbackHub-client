@@ -125,7 +125,7 @@ const MyReviews = () => {
     }
 
     return (
-        <div>
+        <div className='mt-20'>
             <Helmet title='My Reviews | FeedbackHub' />
 
             <Layout></Layout>
@@ -136,7 +136,7 @@ const MyReviews = () => {
 
             <dialog id="my_modal_4" className="modal">
                 <div className="modal-box w-11/12 max-w-5xl">
-                    <div className="max-w-xl mx-auto p-6 bg-white text-black shadow-md rounded-md border border-gray-200">
+                    <div className="max-w-xl mx-auto p-6 bg-white  shadow-md rounded-md border border-gray-200">
                         <h2 className="text-xl font-semibold text-gray-800 mb-4">Update a Review</h2>
                         <form onSubmit={handleUpdateReview} className='text-start font-bold space-y-4'>
                             <div className="mb-4 text-start">
@@ -210,13 +210,13 @@ const MyReviews = () => {
             </dialog>
 
 
-            <div className='my-10'>
+            <div className='py-16 container mx-auto'>
                 <h1 className='text-3xl font-bold  py-4'>Your Reviews</h1>
 
                 {
                     reviews.map(item =>
 
-                        <div className='border rounded-xl p-4 text-start  md:flex items-center justify-between mb-4'>
+                        <div className='border rounded-xl p-4 text-start  md:flex items-center justify-between dark:text-white dark:border-gray-600 mb-4'>
                             <div className='space-y-3'>
                                 <h1 className='text-2xl font-bold'>{item.title}</h1>
                                 <p>{item.review_text}</p>

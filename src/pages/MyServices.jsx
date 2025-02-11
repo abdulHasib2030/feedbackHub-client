@@ -146,7 +146,7 @@ const MyServices = () => {
     }
 
     return (
-        <div>
+        <div className="mt-20 text-black dark:text-white">
             <Helmet title='My Services | FeedbackHub' />
 
             <Layout />
@@ -155,10 +155,10 @@ const MyServices = () => {
             {/* modal */}
             {/* You can open the modal using document.getElementById('ID').showModal() method */}
 
-            <dialog id="my_modal_4" className="modal">
-                <div className="modal-box w-11/12 max-w-5xl">
+            <dialog id="my_modal_4" className="modal ">
+                <div className="modal-box w-11/12 max-w-5xl dark:text-white text-black bg-white dark:bg-gray-900">
                     <div>
-                        <h1 className="font-bold text-3xl text-center">Update Service</h1>
+                        <h1 className="font-bold text-3xl text-center text-white">Update Service</h1>
                         <form method='post' onSubmit={handleUpdateService}>
                             <div className="grid grid-cols-1 text-start font-semibold gap-6 mt-7 sm:grid-cols-2">
                                 <div>
@@ -215,7 +215,7 @@ const MyServices = () => {
                                 <div>
                                     <label className="" >Category</label>
 
-                                    <select name='category' className="select block select-bordered w-full max-w-xs">
+                                    <select name='category' className="select block select-bordered w-full max-w-xs bg-white dark:bg-gray-900">
                                         <option disabled selected>Choose category</option>
                                         {
                                             singleItem?.category_slug === 'home-cleaning' ?
@@ -266,8 +266,8 @@ const MyServices = () => {
 
                                 <div>
                                     <label className="" for="passwordConfirmation">Added date</label> <br />
-                                    <div className=" w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                                        <DatePicker className='text-gray-700 dark:bg-gray-800 dark:text-gray-300'
+                                    <div className=" w-full px-4 py-2 mt-2 text-white bg-white border border-gray-300 rounded-md  dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                        <DatePicker className=''
                                             selected={!selectedYear ? singleItem?.year : selectedYear}
                                             onChange={(date) => setSelectedYear(date)}
 
@@ -295,7 +295,7 @@ const MyServices = () => {
                             </div>
 
                             <div className="flex justify-start mt-6">
-                                <button className=" py-3 leading-5 text-white w-full font-bold text-xl transition-colors duration-200 transform bg-gray-600 hover:bg-gray-400 hover:rounded-lg hover:border hover:border-black">Update service</button>
+                                <button className="w-full px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Update service</button>
                             </div>
                         </form>
                     </div>
@@ -310,10 +310,11 @@ const MyServices = () => {
             </dialog>
 
 
-            <div className="overflow-x-auto my-10 border p-6 rounded-xl">
+            <div className="container mx-auto py-4" >
+                <div className="overflow-x-auto my-10 border p-6 dark:border-gray-600 rounded-xl">
                 <h1 className="text-center text-3xl font-bold">My Services</h1>
                 <div className="my-5 w-full md:w-1/2">
-                    <label className="input input-bordered flex mt-4 p-2 items-center gap-2">
+                    <label className="input input-bordered flex mt-4 p-2 bg-white dark:bg-gray-900 items-center gap-2">
 
                         <input type="text" placeholder="Search title company name & category" onChange={(e) => setSearch(e.target.value)} value={search} className="grow" />
                         <svg
@@ -376,6 +377,9 @@ const MyServices = () => {
                     </tbody>
 
                 </table>
+                </div>
+            
+            
             </div>
 
             <Footer />

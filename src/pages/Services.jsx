@@ -12,9 +12,8 @@ import { AuthContext } from '../provider/AuthProvider';
 import axios from 'axios';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
-import { Dropdown, DropdownItem } from "flowbite-react";
-import { Label, Select } from "flowbite-react";
 
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 const MyServices = () => {
     const { user, setCountReview, setCountService } = useContext(AuthContext)
     const { result, lenReview } = useLoaderData()
@@ -55,8 +54,8 @@ const MyServices = () => {
                
                 <div className='flex justify-between items-center'>
                 <div className="dropdown dropdown-hover flex justify-start z-50 mt-5">
-                    <div tabIndex={0} role="button" className="btn bg-black text-white">Filter by Category</div>
-                    <ul tabIndex={0} className="dropdown-content menu bg-black rounded-box text-white z-[1] w-52 p-2 shadow">
+                    <div tabIndex={0} role="button" className="btn bg-white dark:bg-gray-900 dark:text-white text-black">Filter by Category</div>
+                    <ul tabIndex={0} className="dropdown-content menu bg-white dark:bg-gray-900 dark:text-white text-black z-[1] w-52 p-2 shadow">
                         <li onClick={() => handleFilter('home-cleaning')} className='hover:bg-gray-400' ><a>Home Cleaning</a></li>
                         <li onClick={() => handleFilter('electronics-repair')} className='hover:bg-gray-400'><a>Electronics Repair</a></li>
                         <li onClick={() => handleFilter('catering-services')} className='hover:bg-gray-400'><a>Catering Services</a></li>
@@ -67,10 +66,10 @@ const MyServices = () => {
                     <div>
                         <div className="max-w-md">
                           
-                          <div className='text-black border p-2 rounded-xl cursor-pointer' onClick={handleAscenDescenOrder}>
+                          <div className='text-black dark:text-white border p-2 rounded-xl cursor-pointer' onClick={handleAscenDescenOrder}>
                             {
-                                order ?  <p>Sort by ascending</p>:
-                            <p>Sort by descending</p>
+                                order ?  <p className='flex items-center '>Sort by ascending <FaSortUp className='mt-2' /></p>:
+                            <p className='flex items-center '>Sort by descending <FaSortDown /></p>
                             }
                            
                           </div>

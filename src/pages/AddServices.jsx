@@ -106,14 +106,17 @@ const AddServices = () => {
 
 
     return (
-        <div>
+        <div className='mt-20'>
             <Helmet
                 title="Add Service | FeedbackHub" />
 
             <Layout></Layout>
             {/* add services form */}
 
-            <section className="max-w-4xl p-6 mx-auto  rounded-md shadow-md my-10">
+            <section className="container   mx-auto  py-10 text-black dark:text-white ">
+                <div className='rounded-md border dark:border-gray-600 p-6'>
+
+            
                 <h1 className="text-2xl font-bold  capitalize ">Add Your Service </h1>
                 <form method='post' onSubmit={handleAddService}>
                     <div className="grid grid-cols-1 text-start font-semibold gap-6 mt-7 sm:grid-cols-2">
@@ -227,9 +230,10 @@ const AddServices = () => {
                     </div>
 
                     <div className="flex justify-start mt-6">
-                        <button className=" py-3 leading-5 text-white w-full font-bold text-xl transition-colors duration-200 transform bg-gray-600 hover:bg-gray-400 hover:rounded-lg hover:border hover:border-black">Add service</button>
+                        <button className=" py-3 leading-5  w-full  mt-5 font-bold text-xl transition-colors dark:bg-[#1F2937] dark:border-gray-600 duration-200 transform  dark:text-white border rounded-xl">Add service</button>
                     </div>
-                </form>
+                </form>    
+                </div>
             </section>
 
             <Footer></Footer>
