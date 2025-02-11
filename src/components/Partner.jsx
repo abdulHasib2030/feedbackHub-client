@@ -11,7 +11,7 @@ const Partner = () => {
             .catch(err => (err))
     }, [])
     return (
-        <div className='my-16'>
+        <div className='my-16 container mx-auto'>
             <div className='flex justify-between my-5'>
                 <h1 className='text-3xl font-bold  text-start'>Meet our partner</h1>
             </div>
@@ -19,7 +19,7 @@ const Partner = () => {
                 {partners.map((partner, index) => (
                     <motion.div
                         key={index}
-                        className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center"
+                        className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-center text-center dark:bg-gray-900 dark:text-white border dark:border-gray-600"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         initial={{ opacity: 0, y: 20 }}
@@ -31,10 +31,10 @@ const Partner = () => {
                             alt={`${partner.name} Logo`}
                             className="w-24 h-24 object-contain mb-4"
                         />
-                        <h3 className="text-lg font-semibold text-gray-700 mb-2">
+                        <h3 className="text-lg font-semibold  mb-2">
                             {partner.name}
                         </h3>
-                        <p className="text-gray-600 text-sm text-justify">{partner.description}</p>
+                        <p className=" text-sm text-justify">{partner.description}</p>
                     </motion.div>
                 ))}
 

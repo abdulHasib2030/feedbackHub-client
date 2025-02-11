@@ -8,6 +8,7 @@ import banner1 from '../assets/4.jpg'
 import banner2 from '../assets/5.jpg'
 import banner3 from '../assets/6.jpg'
 import { Link } from 'react-router-dom';
+import bannarimg from '../assets/banner.gif'
 
 const Banner = () => {
   const progressCircle = useRef(null);
@@ -17,8 +18,8 @@ const Banner = () => {
     progressContent.current.textContent = `${Math.ceil(time / 1000)}s`;
   };
   return (
-    <div className='mt-5 relative'>
-      <Swiper
+    <div className='mt-[50px] relative w-full'>
+      {/* <Swiper
         spaceBetween={30}
         centeredSlides={true}
         autoplay={{
@@ -75,7 +76,25 @@ const Banner = () => {
           </svg>
           <span ref={progressContent}></span>
         </div>
-      </Swiper>
+      </Swiper> */}
+      <div>
+      <img src={bannarimg} alt="" className='w-full '/> 
+      <div className='absolute top-0 left-0 right-0 flex items-center justify-center h-full flex-col space-y-16'>
+      <h1 className='lg:text-4xl md:text-2xl text-lg  text-white font-semibold w-3/4 text-center  mx-auto'>Explore a world of services. Share your experiences and help others make informed decisions through genuine reviews.</h1>
+
+<button>
+
+  {/* <Link to={'/'} className="" >Explore Now</Link> */}
+
+  <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50">
+      <span className="absolute  inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#a2aeff_0%,#3749be_50%,#a2aeff_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+      <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full dark:bg-[#070e41] bg-[#ffffff] px-8 py-1 text-sm font-medium dark:text-gray-50 text-black backdrop-blur-3xl">
+        Explore Now
+      </span>
+    </button>
+</button>
+        </div> 
+      </div>
     </div>
   );
 };

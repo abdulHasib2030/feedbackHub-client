@@ -12,10 +12,10 @@ import { motion } from "motion/react"
 const Feature = ({ data }) => {
    
     return (
-        <div className='my-16'> 
+        <div className='my-16 container mx-auto'> 
         <div className='flex justify-between my-5'>
             <h1 className='text-3xl font-bold  text-start'>Feature Service</h1>
-            <Link to={'/services'} className='rounded-full border-2 cursor-pointer border-blue-600 text-blue-600 font-bold px-2 py-1 hover:bg-blue-600 hover:text-white'>See more</Link>
+            <Link to={'/services'} className='rounded-xl border-2 cursor-pointer border-blue-600 text-blue-600 font-bold px-2 py-1 hover:bg-blue-600 hover:text-white'>See more</Link>
         </div>
         <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-9'>
             {
@@ -27,22 +27,22 @@ const Feature = ({ data }) => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                  <Card className="border mt-4 h-full">
+                  <Card className="border dark:border-gray-600 mt-4 h-full dark:bg-gray-900 dark:text-white ">
                 <CardBody while>
-                   <img src={item.imageURL} alt="" className='w-full h-72'/>
+                   <img src={item.imageURL} alt="" className='w-full h-72 rounded-xl'/>
                     <Typography variant="h5" color="blue-gray" className="mb-2">
                         {item.title}
                     </Typography>
                     <Typography>
                        {item.description.slice(0, 100)}...
                     </Typography>
-                    <Typography className='text-justify'>
+                    {/* <Typography className='text-justify'>
                        Price: ${item.price}
-                    </Typography>
+                    </Typography> */}
                 </CardBody>
-                <CardFooter className="pt-0">
+                <CardFooter className="pt-0 text-start">
                     <Link to={`/service-details/${item._id}`} className="inline-block">
-                        <Button size="sm" variant="text" className="flex items-center gap-2">
+                        <Button size="sm" variant="text" className="flex items-center gap-2 dark:text-white">
                            see details
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
