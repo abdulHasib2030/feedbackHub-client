@@ -11,7 +11,7 @@ import { motion } from "motion/react"
 
 const MostReviewService = ({data}) => {
     return (
-            <div className='my-16'> 
+            <div className='my-16 container mx-auto'> 
                <div className='flex justify-between my-5' id='most-service'>
                    <h1 className='text-3xl font-bold  text-start'>Most Review Service</h1>
                </div>
@@ -25,24 +25,26 @@ const MostReviewService = ({data}) => {
                      animate={{ opacity: 1, y: 0 }}
                      transition={{ duration: 0.5, delay: index * 0.1 }}
                      >
-                         <Card className="border mt-4 h-full ">
-                       <CardBody while>
-                          <img src={item.img} alt="" className='w-full h-96'/>
-                           <Typography variant="h5" color="blue-gray" className="mb-2 text-3xl text-black">
+                         <Card className="border mt-4 h-full dark:bg-gray-900 dark:text-white dark:border-gray-600">
+                       <CardBody while className='space-y-5'>
+                          <img src={item.img} alt="" className='w-full h-96 rounded-xl'/>
+                           <Typography variant="h5" color="blue-gray" className="mb-2 text-3xl ">
                                {item.title}
                            </Typography>
                            <Typography>
                               {item.description.slice(0, 100)}...
                            </Typography>
-                           <Typography>
+                           {/* <Typography>
                               Price: ${item.price}
+                           </Typography> */}
+                           <Typography>
+                       <p >Total Review: {item.total_review}</p>
                            </Typography>
 
                        </CardBody>
-                       <p>Total Review: {item.total_review}</p>
                        <CardFooter className="pt-0">
                            <Link to={`/service-details/${item.id}`} className="inline-block">
-                               <Button size="sm" variant="text" className="flex items-center gap-2">
+                               <Button size="sm" variant="text" className="flex items-center gap-2 dark:text-white">
                                   see details
                                    <svg
                                        xmlns="http://www.w3.org/2000/svg"

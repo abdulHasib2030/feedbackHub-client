@@ -3,13 +3,13 @@ import { Typography } from "@material-tailwind/react";
 import logo from '../assets/logo.png'
 const Footer = () => {
     return (
-        <div>
-            <footer className="w-full bg-white p-8 mt-24 ">
-                <div className="flex flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg-white text-center md:justify-between">
+        <div className=''>
+            <footer className="w-full bg-white dark:bg-gray-900 p-8 mt-24 ">
+                <div className="flex container mx-auto flex-row flex-wrap items-center justify-center gap-y-6 gap-x-12 bg-white dark:bg-gray-900 text-center md:justify-between">
                     <img src={logo} alt="logo-ct" className="w-36" />
                     
                     <ul className="flex flex-wrap items-center gap-y-2 gap-x-8">
-                        <li>
+                        {/* <li>
                             <Typography
                                 as="a"
                                 href="#"
@@ -18,8 +18,8 @@ const Footer = () => {
                             >
                                 About Us
                             </Typography>
-                        </li>
-                        <li>
+                        </li> */}
+                        {/* <li>
                             <Typography
                                 as="a"
                                 href="#"
@@ -28,15 +28,15 @@ const Footer = () => {
                             >
                                 License
                             </Typography>
-                        </li>
+                        </li> */}
                         <li>
                             <Typography
                                 as="a"
-                                href="#"
+                                href="/services"
                                 color="blue-gray"
                                 className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
                             >
-                                Contribute
+                               Secices
                             </Typography>
                         </li>
                         <li>

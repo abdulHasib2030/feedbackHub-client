@@ -6,9 +6,9 @@ const Count = () => {
     const { countReview, setCountReview,
         countService, setCountService, } = useContext(AuthContext)
     return (
-        <div className='my-16'>
+        <div className='my-16 container mx-auto'>
             <div
-                className="bg-cover bg-center py-10 "
+                className="bg-cover bg-center py-10 rounded-xl"
                 style={{
                     backgroundImage: "url('https://i.ibb.co.com/DKn032f/towfiqu-barbhuiya-0-ZUo-Bt-Lw3y4-unsplash.jpg')",
                 }}

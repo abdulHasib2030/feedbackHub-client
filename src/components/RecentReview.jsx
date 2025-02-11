@@ -4,7 +4,7 @@ import { Rating } from 'react-simple-star-rating';
 
 const RecentReview = ({data}) => {
     return (
-        <div className='my-16'>
+        <div className='my-16 container mx-auto'>
             <div className='flex justify-between my-5' id='recent-review'>
                 <h1 className='text-3xl font-bold  text-start'>Recent reviews</h1>
             </div>
@@ -12,7 +12,7 @@ const RecentReview = ({data}) => {
                 {
                     data.slice(0,8).map(item => 
 
-                        <div className='border rounded-lg p-4 text-start'>
+                        <div className='border dark:border-gray-600 rounded-lg p-4 text-start'>
                     <div className='flex items-center gap-2'>
                         <img src={item.userPhoto} className='w-12 rounded-full ' alt="" />
                         <div>
@@ -28,7 +28,7 @@ const RecentReview = ({data}) => {
                         <img src={item?.service_logo} className='w-12' alt="" />
                         <div>
                             <h4 className='font-bold'>{item?.service_name}</h4>
-                            <p className='text-gray-400 font-semibold'>{item?.service_website}</p>
+                            <p className=' font-semibold'>{item?.service_website}</p>
                         </div>
                     </div>
                 </div>
