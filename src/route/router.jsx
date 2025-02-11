@@ -13,6 +13,7 @@ import MyReviews from '../pages/MyReviews';
 import ErrorPage from '../pages/ErrorPage';
 import Layout from '../Layout/Layout';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+import Contact from '../pages/Contact';
 
 // const axiosSecure = useAxiosSecure()
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
                 path:'/register',
                 element:<Logredirect><Register/></Logredirect>,
                 loader: ()=> fetch(`${import.meta.env.VITE_URL}/register`)
+            },
+            {
+                path:'/contact',
+                element:<Contact />,
             },
             {
                 path: '/add-services',
