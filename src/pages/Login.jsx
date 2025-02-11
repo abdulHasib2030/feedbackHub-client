@@ -63,10 +63,11 @@ const Login = () => {
                    
             <Layout />
             <section className=" my-10" >
-                <div className="place-items-center h-screen grid ">
+                <div className="place-items-center h-screen grid  dark:bg-gray-900">
                     <Card
                         shadow={false}
-                        className="md:px-24 md:py-14 py-8 px-4 flex md:flex-row border border-gray-300"
+                        className="md:px-24 md:py-14 py-8 px-4 flex md:flex-row border dark:bg-gray-900 border-gray-300"
+                        
                     >
 
                         <CardHeader>
