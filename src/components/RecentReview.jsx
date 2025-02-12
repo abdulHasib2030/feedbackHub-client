@@ -12,7 +12,7 @@ const RecentReview = ({data}) => {
                 {
                     data.slice(0,8).map(item => 
 
-                        <div className='border dark:border-gray-600 rounded-lg p-4 text-start'>
+                        <div className='border dark:border-gray-600 rounded-lg p-4 text-start overflow-hidden'>
                     <div className='flex items-center gap-2'>
                         <img src={item.userPhoto} className='w-12 rounded-full ' alt="" />
                         <div>
@@ -28,7 +28,7 @@ const RecentReview = ({data}) => {
                         <img src={item?.service_logo} className='w-12' alt="" />
                         <div>
                             <h4 className='font-bold'>{item?.service_name}</h4>
-                            <p className=' font-semibold'>{item?.service_website}</p>
+                            <p className=' font-semibold overflow-hidden'>{item?.service_website}</p>
                         </div>
                     </div>
                 </div>

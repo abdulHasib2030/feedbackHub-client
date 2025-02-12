@@ -266,11 +266,11 @@ const MyServices = () => {
 
                                 <div>
                                     <label className="" for="passwordConfirmation">Added date</label> <br />
-                                    <div className=" w-full px-4 py-2 mt-2 text-white bg-white border border-gray-300 rounded-md  dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                                        <DatePicker className=''
+                                    <div className=" w-full px-4 py-2 mt-2 text-white bg-white border dark:bg-gray-900 border-gray-300 rounded-md  dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                                        <DatePicker className='bg-white text-black dark:bg-gray-900 dark:text-white'
                                             selected={!selectedYear ? singleItem?.year : selectedYear}
                                             onChange={(date) => setSelectedYear(date)}
-
+                                            
                                             placeholderText="Select a date"
 
 

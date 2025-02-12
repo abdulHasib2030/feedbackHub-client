@@ -113,7 +113,7 @@ const AddServices = () => {
             <Layout></Layout>
             {/* add services form */}
 
-            <section className="container   mx-auto  py-10 text-black dark:text-white ">
+            <section className="container   mx-auto  py-16 text-black dark:text-white ">
                 <div className='rounded-md border dark:border-gray-600 p-6'>
 
             
@@ -173,7 +173,7 @@ const AddServices = () => {
                         </div>
                         <div>
                             <label className="" >Category</label>
-                            <select name='category' className="select block select-bordered w-full max-w-xs">
+                            <select name='category' className="select block select-bordered w-full max-w-xs bg-white dark:bg-[#1F2937]">
                                 <option disabled selected>Choose category</option>
                                 <option value="home-cleaning">Home Cleaning</option>
                                 <option value="electronics-repair">Electronics Repair</option>
@@ -202,7 +202,7 @@ const AddServices = () => {
                         <div>
                             <label className="" for="passwordConfirmation">Added date</label> <br />
                             <div className=" w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
-                                <DatePicker className='text-gray-700 dark:bg-gray-800 dark:text-gray-300'
+                                <DatePicker className='text-gray-700 dark:bg-gray-800 dark:text-gray-300 bg-white '
                                     selected={selectedYear}
                                     onChange={(date) => setSelectedYear(date)}
                                     // showYearPicker
@@ -230,7 +230,7 @@ const AddServices = () => {
                     </div>
 
                     <div className="flex justify-start mt-6">
-                        <button className=" py-3 leading-5  w-full  mt-5 font-bold text-xl transition-colors dark:bg-[#1F2937] dark:border-gray-600 duration-200 transform  dark:text-white border rounded-xl">Add service</button>
+                        <button className='group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md  bg-gradient-to-r dark:from-[#070e41] dark:to-[#263381] from-[#f6f7ff] to-[#f5f6ff] dark:border-[rgb(76_100_255)] border-2 border-[#263381]  bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 hover:[box-shadow:5px_5px_rgb(38_51_129)] translate-x-[3px] hover:translate-x-[0px] translate-y-[3px] hover:translate-y-[0px]   [box-shadow:0px_0px_rgb(38_51_129)] dark:hover:[box-shadow:5px_5px_rgb(76_100_255)]dark:active:[box-shadow:0px_0px_rgb(76_100_255)] active:[box-shadow:0px_0px_rgb(38_51_129)] w-full active:translate-y-[3px] active:translate-x-[3px]'>Add service</button>
                     </div>
                 </form>    
                 </div>

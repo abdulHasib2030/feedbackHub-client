@@ -101,11 +101,12 @@ const MyServiceDetails = () => {
 
 
     return (
-        <div>
+        <div >
             <Helmet title={`${title} | FeedbackHub`} />
 
             <Layout />
-            <div className='my-10 gap-6 md:flex justify-evenly border py-5'>
+<div  className='mt-20 py-16 container mx-auto'>
+            <div className=' gap-6 py-5 md:flex justify-evenly border dark:border-gray-600 rounded-xl'>
                 <div className='flex gap-4 items-center '>
                     <img src={imageURL} alt="" className='w-32' />
 
@@ -129,18 +130,18 @@ const MyServiceDetails = () => {
             {/* modal */}
             {/* You can open the modal using document.getElementById('ID').showModal() method */}
             <dialog id="my_modal_4" className="modal">
-                <div className="modal-box w-11/12 max-w-5xl">
-                    <div className="max-w-xl mx-auto p-6 bg-white text-black shadow-md rounded-md border border-gray-200">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Write a Review</h2>
+                <div className="modal-box w-11/12 max-w-5xl bg-white dark:bg-gray-900">
+                    <div className="max-w-xl mx-auto p-6 bg-white dark:bg-gray-900 dark:border-gray-600 dark:text-white text-black shadow-md rounded-md border border-gray-200">
+                        <h2 className="text-xl font-semibold  mb-4">Write a Review</h2>
                         <form onSubmit={handleReview} className='text-start font-bold space-y-4'>
                             <div className="mb-4 text-start">
-                                <label className="block text-sm font-medium text-gray-700">
+                                <label className="block text-sm font-medium ">
                                     Your Review
                                 </label>
                                 <textarea
 
                                     rows="5"
-                                    className="mt-1 p-3 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 p-3 block w-full rounded-md border bg-white dark:bg-gray-900 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Write your review here..."
                                     name='reviewtext'
                                 ></textarea>
@@ -195,14 +196,17 @@ const MyServiceDetails = () => {
 
                         <form method="dialog">
                             {/* if there is a button, it will close the modal */}
-                            <button className="btn bg-gray-400 font-bold">Cancel</button>
+                            <button className="btn  font-bold">Cancel</button>
                         </form>
                     </div>
                 </div>
             </dialog>
 
             <div className='my-3'>
-                <button onClick={() => document.getElementById('my_modal_4').showModal()} className='py-3 font-bold bg-black w-full text-white hover:rounded-xl hover:bg-gray-500 hover:border hover:border-black '>Add review</button>
+            <button onClick={() => document.getElementById('my_modal_4').showModal()} className='group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md  bg-gradient-to-r dark:from-[#070e41] dark:to-[#263381] from-[#f6f7ff] to-[#f5f6ff] dark:border-[rgb(76_100_255)] border-2 border-[#263381]  bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 hover:[box-shadow:5px_5px_rgb(38_51_129)] translate-x-[3px] hover:translate-x-[0px] translate-y-[3px] hover:translate-y-[0px]   [box-shadow:0px_0px_rgb(38_51_129)] dark:hover:[box-shadow:5px_5px_rgb(76_100_255)]dark:active:[box-shadow:0px_0px_rgb(76_100_255)] active:[box-shadow:0px_0px_rgb(38_51_129)] active:translate-y-[3px] active:translate-x-[3px]'>
+            Add review
+      </button>
+                <button onClick={() => document.getElementById('my_modal_4').showModal()} className=' '></button>
             </div>
 
             <div className='grid md:grid-cols-12 gap-7'>
@@ -261,7 +265,7 @@ const MyServiceDetails = () => {
 
                 </div>
             </div>
-
+            </div>
             <Footer />
         </div>
     );

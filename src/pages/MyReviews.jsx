@@ -125,7 +125,7 @@ const MyReviews = () => {
     }
 
     return (
-        <div className='mt-20'>
+        <div className='mt-20 text-black dark:text-white'>
             <Helmet title='My Reviews | FeedbackHub' />
 
             <Layout></Layout>
@@ -135,19 +135,19 @@ const MyReviews = () => {
             {/* You can open the modal using document.getElementById('ID').showModal() method */}
 
             <dialog id="my_modal_4" className="modal">
-                <div className="modal-box w-11/12 max-w-5xl">
-                    <div className="max-w-xl mx-auto p-6 bg-white  shadow-md rounded-md border border-gray-200">
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Update a Review</h2>
+                <div className="modal-box w-11/12 max-w-5xl dark:bg-gray-900 bg-white">
+                    <div className="max-w-xl mx-auto p-6 bg-white text-black dark:bg-gray-900 dark:border-gray-600 dark:text-white  shadow-md rounded-md border border-gray-200">
+                        <h2 className="text-xl font-semibold mb-4">Update a Review</h2>
                         <form onSubmit={handleUpdateReview} className='text-start font-bold space-y-4'>
                             <div className="mb-4 text-start">
-                                <label className="block text-sm font-medium text-gray-700">
+                                <label className="block text-sm font-medium ">
                                     Your Review
                                 </label>
                                 <textarea
 
                                     rows="5"
                                     defaultValue={editData?.review_text}
-                                    className="mt-1 p-3 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="mt-1 p-3 block w-full rounded-md border bg-white dark:bg-gray-900 border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                     placeholder="Write your review here..."
                                     name='reviewtext'
                                 ></textarea>

@@ -36,13 +36,13 @@ const Footer = () => {
                                 color="blue-gray"
                                 className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
                             >
-                               Secices
+                               Services
                             </Typography>
                         </li>
                         <li>
                             <Typography
                                 as="a"
-                                href="#"
+                                href="/contact"
                                 color="blue-gray"
                                 className="font-normal transition-colors hover:text-blue-500 focus:text-blue-500"
                             >
@@ -55,7 +55,7 @@ const Footer = () => {
                 </div>
                 <hr className="my-8 border-blue-gray-50" />
                 <Typography color="blue-gray" className="text-center font-normal">
-                    &copy; 2023 FeedbackHub
+                    &copy; 2025 FeedbackHub
                 </Typography>
             </footer>
         </div>

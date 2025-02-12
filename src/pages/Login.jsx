@@ -17,13 +17,16 @@ import axios from 'axios'
 import toast from 'react-hot-toast';
 import Footer from '../components/Footer';
 import { Helmet } from 'react-helmet-async';
+import { useState } from 'react';
 
 
 const Login = () => {
-    const { setUser, setLoading, loginUser, googleAuth, setCountReview, setCountService } = useContext(AuthContext)
+    const { setUser, loginUser, googleAuth, setCountReview, setCountService } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
     const {lenReview, lenService} = useLoaderData()
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState({})
     setCountReview(lenReview)
     setCountService(lenService)
 
@@ -32,7 +35,11 @@ const Login = () => {
         const form = e.target;
         const email = form.email.value;
         const password = form.password.value;
-      
+        if(!email) return setError({email: "Email required"})
+        if(!password) return setError({password: "Password required"})
+        else setError({})
+        setLoading(true)
+
         loginUser(email, password)
             .then(res => {
                 const user = res.user;
@@ -41,6 +48,7 @@ const Login = () => {
                 toast.success("Successfully login.")
                 navigate(location.state ? location.state : "/"
                 )
+                setLoading(false)
             })
             .catch(err => {
                 setLoading(false)
@@ -58,34 +66,31 @@ const Login = () => {
 
 
     return (
-        <div>
+        <div className='mt-20 py-16'>
              <Helmet title='Login | FeedbackHub' />
                    
             <Layout />
-            <section className=" my-10" >
-                <div className="place-items-center h-screen grid  dark:bg-gray-900">
+            <section className="" >
+                <div className="place-items-center  grid  dark:bg-gray-900">
                     <Card
                         shadow={false}
-                        className="md:px-24 md:py-14 py-8 px-4 flex md:flex-row border dark:bg-gray-900 border-gray-300"
-                        
-                    >
-
+                        className=" container mx-auto flex md:flex-row justify-between dark:text-white dark:bg-gray-900 border dark:border-gray-600"  >
                         <CardHeader>
-                            <Lottie animationData={img}></Lottie>
+                            <Lottie animationData={img} className='h-full w-full dark:bg-gray-900 border-none shadow-none'></Lottie>
 
                         </CardHeader>
 
-                        <CardHeader shadow={false} floated={false} className="text-center">
+                        {/* <CardHeader shadow={false} floated={false} className="text-center">
 
 
 
-                        </CardHeader>
-                        <CardBody>
+                        </CardHeader> */}
+                        <CardBody className='md:w-1/2'>
 
                             <Typography
                                 variant="h1"
                                 color="blue-gray"
-                                className="mb-4 !text-3xl font-bold lg:text-4xl"
+                                className="mb-4 !text-3xl font-bold lg:text-4xl w-full"
                             >
                                 Welcome Back Login
                             </Typography>
@@ -104,6 +109,9 @@ const Login = () => {
                                     className="w-full input input-bordered placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200 p-1 h-12"
 
                                 />
+                                {
+                                    error?.email && <p className='text-red-500'>{error?.email}</p>
+                                }
                                 <label className='text-start font-bold  '>Password</label>
 
 
@@ -116,27 +124,35 @@ const Login = () => {
                                         className: "hidden",
                                     }}
                                 />
-
+                                 {
+                                    error?.password && <p className='text-red-500'>{error?.password}</p>
+                                }
+                                {
+                                    loading ? 
+                                <Button type='submit' size="lg" variant='outlined' className='flex h-12 border-gray-600 bg-gray-600 text-white items-center justify-center gap-2'>
+                                    Loading...
+                                </Button>:
                                 <Button type='submit' size="lg" variant='outlined' className='flex h-12 border-gray-600 bg-gray-600 text-white items-center justify-center gap-2'>
                                     Login
                                 </Button>
+                                }
                             </form>
                             <div className='divider'>or</div>
                             <Button onClick={handleGoogleLogin}
                                 variant="outlined"
                                 size="lg"
-                                className="flex h-12 border-blue-gray-200 items-center justify-center gap-2"
+                                className="flex h-12 dark:text-white border-blue-gray-200 items-center justify-center gap-2 mb-2"
                                 fullWidth
                             >
                                 <img
                                     src={`https://www.material-tailwind.com/logos/logo-google.png`}
                                     alt="google"
-                                    className="h-6 w-6"
+                                    className="h-6 w-6 "
                                 />{" "}
                                 sign in with google
                             </Button>
 
-                            <p>Don't have an Account? <Link className='link-hover text-blue-700' to={'/register'}>Register</Link></p>
+                            <p>Don't have an Account? <Link className='link-hover text-blue-700 ' to={'/register'}>Register</Link></p>
 
 
                         </CardBody>

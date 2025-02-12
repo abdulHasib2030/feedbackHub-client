@@ -1,48 +1,71 @@
-import { Button, Drawer, Label, Textarea, TextInput } from "flowbite-react";
+import { Button, Card, Drawer, Label, Textarea, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { HiEnvelope } from "react-icons/hi2";
 import NavbarMain from "../components/NavbarMain";
 import Footer from "../components/Footer";
-
+import { FaRegMessage } from "react-icons/fa6";
+import toast from "react-hot-toast";
 const Contact = () => {
+  const [error, setError] = useState({})
+  const handleContactForm = (e) =>{
+    e.preventDefault()
+    const form = e.target;
+    console.log(form.email.value, form.subject.value, form.message.value);
+    const email = form.email.value;
+    const subject = form.subject.value;
+    const msg = form.message.value;
+    
+    if(!email) return setError({email: "Email required."})
+    if(!subject) return setError({email: "Subject required."})
+    if(!msg) return setError({email: "Message required."})
+    else setError({})
+    form.reset()
+    toast.success("We accept your message. As soon as possible we response your message.")
+  }
+
     return (
         <div>
             <NavbarMain></NavbarMain>
 
-            <div className="container  mx-auto">
-                <div id="drawer-contact" class="h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-80 dark:bg-gray-800" tabindex="-1" aria-labelledby="drawer-contact-label">
-                    <h5 id="drawer-label" class="inline-flex items-center mb-6 text-base font-semibold text-gray-500 uppercase dark:text-gray-400"><svg class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
-                        <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z" />
-                        <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z" />
-                    </svg>Contact us</h5>
-                    <button type="button" data-drawer-hide="drawer-contact" aria-controls="drawer-contact" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 inline-flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white" >
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                        <span class="sr-only">Close menu</span>
-                    </button>
-                    <form class="mb-6">
-                        <div class="mb-6">
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-                            <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required />
-                        </div>
-                        <div class="mb-6">
-                            <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subject</label>
-                            <input type="text" id="subject" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Let us know how we can help you" required />
-                        </div>
-                        <div class="mb-6">
-                            <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your message</label>
-                            <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Your message..."></textarea>
-                        </div>
-                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 w-full focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 block">Send message</button>
-                    </form>
-                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                        <a href="#" class="hover:underline">info@company.com</a>
-                    </p>
-                    <p class="text-sm text-gray-500 dark:text-gray-400">
-                        <a href="#" class="hover:underline">212-456-7890</a>
-                    </p>
-                </div>
+            <div className="container  mx-auto mt-20 py-16 text-black dark:text-white ">
+            <Card >
+        {/* <Drawer.Header title="CONTACT US" titleIcon={HiEnvelope} /> */}
+        {/* <Drawer.Items> */}
+        <h1 className="flex gap-3 text-3xl items-center justify-center"><HiEnvelope/> CONTACT US</h1>
+          <form onSubmit={handleContactForm}>
+            <div className="mb-6 mt-3">
+              <Label htmlFor="email" className="mb-2 block">
+                Your email
+              </Label>
+              
+              <input placeholder="name@company.com" type="email" name="email" className="p-2 w-full rounded-lg bg-white border dark:bg-gray-900 dark:border-gray-600"/>
+            </div>
+            <div className="mb-6">
+              <Label htmlFor="subject" className="mb-2 block">
+                Subject
+              </Label>
+              <input type="text" placeholder="Let us know how we can help you" name="subject" className="p-2 w-full rounded-lg bg-white border dark:bg-gray-900 dark:border-gray-600"/>
+              {/* <TextInput id="subject" name="subject"  placeholder="Let us know how we can help you" /> */}
+            </div>
+            <div className="mb-6">
+              <Label htmlFor="message" className="mb-2 block">
+                Your message
+              </Label>
+              <Textarea id="message" name="message" className="p-2 w-full rounded-lg bg-white border dark:bg-gray-900 dark:border-gray-600" placeholder="Your message..." rows={4} />
+            </div>
+            <div className="mb-6">
+              {/* <Button type="submit" className="w-full text-black dark:text-white">
+                
+              </Button> */}
+              <button className='group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-md  bg-gradient-to-r dark:from-[#070e41] dark:to-[#263381] from-[#f6f7ff] to-[#f5f6ff] dark:border-[rgb(76_100_255)] border-2 border-[#263381]  bg-transparent px-6 font-medium dark:text-white text-black transition-all duration-100 hover:[box-shadow:5px_5px_rgb(38_51_129)] translate-x-[3px] hover:translate-x-[0px] translate-y-[3px] hover:translate-y-[0px]   [box-shadow:0px_0px_rgb(38_51_129)] dark:hover:[box-shadow:5px_5px_rgb(76_100_255)]dark:active:[box-shadow:0px_0px_rgb(76_100_255)] active:[box-shadow:0px_0px_rgb(38_51_129)] active:translate-y-[3px] active:translate-x-[3px]'>
+              Send message
+      </button>
+            </div>
+       
+            
+          </form>
+        {/* </Drawer.Items> */}
+      </Card>
             </div>
             <Footer />
         </div>
